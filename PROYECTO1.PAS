@@ -12,15 +12,18 @@ program Hello;
 
         Procedure Compilar;
         var fichero: text;       (* Un fichero de texto *) 
+        linea: string;      (* La linea que leeremos *)
           
         Begin
-             writeln('Compilando');
-             assign( fichero, 'DATOS.TXT' );  (* Le asignamos nombre *) 
-             rewrite( fichero );              (* Lo creamos *) 
-             writeLn( fichero, 'Hola' );      (* Y escribimos *) 
-             writeLn( fichero, 'Segunda linea' );
-             close( fichero );  
-             repeat until keypressed;
+               assign( fichero, 'prueba.cpb' );  (* Le asignamos nombre *) 
+               reset( fichero );                (* Lo abrimos para leer datos *) 
+               while not eof( fichero) do
+               begin
+                    readLn( fichero, linea );    (* Leemos una linea *)
+                    writeLn( linea );            (* Y la mostramos *) 
+               end;
+               close( fichero );                (* Finalmente cerramos *) 
+               repeat until keypressed;
         End;
 
         procedure menu;
