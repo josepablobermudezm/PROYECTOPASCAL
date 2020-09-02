@@ -13,7 +13,7 @@ program Hello;
           begin
           assign(f,nombre);
           reset(f);
-          if (IOResult = 0) then
+          IF IORESULT <> 0 THEN
           begin
                close(f);
                FileExists:=true;
@@ -23,7 +23,7 @@ program Hello;
           end;
 
         Procedure Compilar;
-        var fichero: text;       (* Un fichero de texto *) 
+        var f: text;       (* Un fichero de texto *) 
         Var nombre:string[30];
         Var nombreaux:string[30];
         linea: string;      (* La linea que leeremos *)
@@ -31,18 +31,20 @@ program Hello;
                writeln('Dime tu nombre: ');
                readln(nombreaux);
                nombre := nombreaux + '.cpb';
-               if FileExists( nombre ) then
-                    assign( fichero, nombre );  (* Le asignamos nombre *) 
-                    reset( fichero );                (* Lo abrimos para leer datos *) 
-                    while not eof( fichero) do
+               assign(f,nombre);
+               reset(f);
+               IF IORESULT <> 0 THEN
+               begin
+                    writeLn('El archivo no existe');
+               end
+               else
+               begin
+                    while not eof( f) do
                     begin
-                         readLn( fichero, linea );    (* Leemos una linea *)
+                         readLn( f, linea );    (* Leemos una linea *)
                          writeLn( linea );            (* Y la mostramos *) 
                     end;
-                    close( fichero );  (* Finalmente cerramos *)       
-               else
-               Begin
-                    writeLn('El fichero no existe!');
+                    close(f);
                end;
                repeat until keypressed;
         End;
