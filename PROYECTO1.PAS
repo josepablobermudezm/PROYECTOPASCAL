@@ -11,15 +11,15 @@ program Hello;
         End;
 
         Procedure Compilar;
-        var 
-          fichero: text;       (* Un fichero de texto *) 
-          assign( fichero, 'DATOS.TXT' );  (* Le asignamos nombre *) 
-          rewrite( fichero );              (* Lo creamos *) 
-          writeLn( fichero, 'Hola' );      (* Y escribimos *) 
-          writeLn( fichero, 'Segunda linea' );
-          close( fichero );  
+        var fichero: text;       (* Un fichero de texto *) 
+          
         Begin
              writeln('Compilando');
+             assign( fichero, 'DATOS.TXT' );  (* Le asignamos nombre *) 
+             rewrite( fichero );              (* Lo creamos *) 
+             writeLn( fichero, 'Hola' );      (* Y escribimos *) 
+             writeLn( fichero, 'Segunda linea' );
+             close( fichero );  
              repeat until keypressed;
         End;
 
