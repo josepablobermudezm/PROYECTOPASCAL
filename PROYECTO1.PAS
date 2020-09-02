@@ -26,7 +26,7 @@ program Hello;
         var f: text;       (* Un fichero de texto *) 
         Var nombre:string[30];
         Var nombreaux:string[30];
-        linea: string;      (* La linea que leeremos *)
+        Caracter : char;
         Begin
                writeln('Dime tu nombre: ');
                readln(nombreaux);
@@ -41,8 +41,8 @@ program Hello;
                begin
                     while not eof( f) do
                     begin
-                         readLn( f, linea );    (* Leemos una linea *)
-                         writeLn( linea );            (* Y la mostramos *) 
+                         Read( f, Caracter );    (* Leemos un de caracter en caracter *)
+                         writeLn( Caracter );            (* Y la mostramos en pantalla*) 
                     end;
                     close(f);
                end;

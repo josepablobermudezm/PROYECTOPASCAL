@@ -1,6 +1,7 @@
 CPB Calculadora{
      entero num1, num2;
-     METODO entero Sumar(n1,n2){
+     
+METODO entero Sumar(n1,n2){
      entero resultado;
      resultado = n1+n2;
      DEVOLVER resultado;
