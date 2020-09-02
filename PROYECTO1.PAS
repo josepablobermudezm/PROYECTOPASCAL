@@ -1,6 +1,10 @@
 program Hello;
-        Uses crt;
+        Uses crt, LISTA;
         
+        VAR L_PALABRA :TIPO_LISTA;
+        L_Cab :TIPO_LISTA;
+        PALABRA :STRING[50];
+
         procedure Cargar;
         Begin
              writeln('Cargando');
@@ -78,6 +82,9 @@ program Hello;
 begin
      menu;
      clrscr;
+
+      INICIALIZAR(L_PALABRA);
+      
 
      repeat until keypressed;
 end.
