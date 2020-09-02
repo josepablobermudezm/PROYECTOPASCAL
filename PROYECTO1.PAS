@@ -1,30 +1,53 @@
 program Hello;
         Uses crt;
-        Var nombre:string[30];
-        edad, estatura :integer;
-        peso :real;
-
+        
         procedure Cargar;
         Begin
              writeln('Cargando');
              repeat until keypressed;
         End;
 
+          function FileExists(nombre: String): boolean;
+          var
+          f: text;
+          begin
+          assign(f,nombre);
+          reset(f);
+          if (IOResult = 0) then
+          begin
+               close(f);
+               FileExists:=true;
+          end
+          else
+               FileExists:=false;
+          end;
+
         Procedure Compilar;
         var fichero: text;       (* Un fichero de texto *) 
+        Var nombre:string[30];
+        Var nombreaux:string[30];
         linea: string;      (* La linea que leeremos *)
-          
         Begin
-               assign( fichero, 'prueba.cpb' );  (* Le asignamos nombre *) 
-               reset( fichero );                (* Lo abrimos para leer datos *) 
-               while not eof( fichero) do
-               begin
-                    readLn( fichero, linea );    (* Leemos una linea *)
-                    writeLn( linea );            (* Y la mostramos *) 
+               writeln('Dime tu nombre: ');
+               readln(nombreaux);
+               nombre := nombreaux + '.cpb';
+               if FileExists( nombre ) then
+                    assign( fichero, nombre );  (* Le asignamos nombre *) 
+                    reset( fichero );                (* Lo abrimos para leer datos *) 
+                    while not eof( fichero) do
+                    begin
+                         readLn( fichero, linea );    (* Leemos una linea *)
+                         writeLn( linea );            (* Y la mostramos *) 
+                    end;
+                    close( fichero );  (* Finalmente cerramos *)       
+               else
+               Begin
+                    writeLn('El fichero no existe!');
                end;
-               close( fichero );                (* Finalmente cerramos *) 
                repeat until keypressed;
         End;
+
+          
 
         procedure menu;
         Var i:integer;
