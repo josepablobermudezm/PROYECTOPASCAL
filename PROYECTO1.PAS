@@ -1,11 +1,12 @@
 program PROYECTO1;
      Uses crt;
 
-     TIPO_LISTA = ^TIPO_NODO;
-     TIPO_NODO = Record
-     PALABRA :STRING[50];
-     SGTE       :TIPO_LISTA;
-     ANT        :TIPO_LISTA;
+     TYPE
+          TIPO_LISTA = ^TIPO_NODO;
+          TIPO_NODO = Record
+          PALABRA :STRING[50];
+          SGTE       :TIPO_LISTA;
+          ANT        :TIPO_LISTA;
      END;
      
      VAR L_PALABRA :TIPO_LISTA;
@@ -71,7 +72,7 @@ program PROYECTO1;
      Var nombre:string[30];
      Var nombreaux:string[30];
      Caracter : char;
-     Var Lista, aux :TIPO_NODO;
+     Var Lista, aux :TIPO_LISTA;
      Begin
           writeln('Dime tu nombre: ');
           readln(nombreaux);
@@ -79,7 +80,7 @@ program PROYECTO1;
           assign(f,nombre);
           reset(f);
           Inicializar (Lista);
-          aux=Lista;
+          aux:=Lista;
 
           AGREGAR (Lista, 'como');
           AGREGAR (Lista, 'esta');
