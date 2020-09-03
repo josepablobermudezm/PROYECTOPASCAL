@@ -13,7 +13,6 @@ TIPO_NODO = Record
   SGTE       :TIPO_LISTA;
   ANT        :TIPO_LISTA;
 END;
-
 Procedure Inicializar (Var L :TIPO_LISTA);
 Procedure imprima;
 PROCEDURE AGREGAR(VAR L :TIPO_LISTA; ELE: TIPO_ARCHIVO);

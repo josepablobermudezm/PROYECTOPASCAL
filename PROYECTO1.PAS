@@ -5,9 +5,9 @@ program Hello;
      L_Cab :TIPO_LISTA;
      PALABRA :STRING[50];
 
-     procedure Cargar;
+     procedure Compilar;
      Begin
-          writeln('Cargando');
+          writeln('Compilando...');
           repeat until keypressed;
      End;
 
@@ -26,7 +26,7 @@ program Hello;
           FileExists:=false;
      end;
 
-     Procedure Compilar;
+     Procedure Cargar;
      var f: text;       (* Un fichero de texto *) 
      Var nombre:string[30];
      Var nombreaux:string[30];
