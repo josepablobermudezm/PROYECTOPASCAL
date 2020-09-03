@@ -91,6 +91,7 @@ program PROYECTO1;
                while not eof( f) do
                begin
                     Read( f, Caracter );    (* Leemos un de caracter en caracter *)
+                    
                     writeLn( Caracter );            (* Y la mostramos en pantalla*) 
                end;
                close(f);
