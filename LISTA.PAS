@@ -16,7 +16,7 @@ END;
 
 Procedure Inicializar (Var L :TIPO_LISTA);
 Procedure imprima;
-PROCEDURE AGREGAR(VAR L :TIPO_LISTA: ELE: TIPO_ARCHIVO);
+PROCEDURE AGREGAR(VAR L :TIPO_LISTA; ELE: TIPO_ARCHIVO);
 
 IMPLEMENTATION
 
@@ -28,8 +28,8 @@ Procedure Inicializar (Var L :TIPO_LISTA);
     L^.PALABRA.PALABRA :='';
   END;
 
-Procedure AGREGAR (VAR L :TIPO_LISTA: ELE: TIPO_ARCHIVO);
-  Var aux := TIPO_LISTA;
+Procedure AGREGAR (VAR L :TIPO_LISTA; ELE :TIPO_ARCHIVO);
+  Var aux : TIPO_LISTA;
       New_Ele :TIPO_LISTA;
   Begin
     new(New_Ele);
