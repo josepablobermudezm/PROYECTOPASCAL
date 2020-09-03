@@ -1,14 +1,9 @@
 program PROYECTO1;
      Uses crt;
 
-     TYPE
-     TIPO_ARCHIVO = RECORD
-     PALABRA :STRING[50];
-     END;
-
      TIPO_LISTA = ^TIPO_NODO;
      TIPO_NODO = Record
-     PALABRA :TIPO_ARCHIVO;
+     PALABRA :STRING[50];
      SGTE       :TIPO_LISTA;
      ANT        :TIPO_LISTA;
      END;
@@ -22,10 +17,10 @@ program PROYECTO1;
      NEW(L);
      L^.SGTE := nil;
      L^.ANT  := nil;
-     L^.PALABRA.PALABRA :='';
+     L^.PALABRA :='';
      END;
 
-     Procedure AGREGAR (VAR L :TIPO_LISTA; ELE :TIPO_ARCHIVO);
+     Procedure AGREGAR (VAR L :TIPO_LISTA; ELE :STRING);
      Var aux :TIPO_LISTA;
           New_Ele :TIPO_LISTA;
      Begin
@@ -76,12 +71,21 @@ program PROYECTO1;
      Var nombre:string[30];
      Var nombreaux:string[30];
      Caracter : char;
+     Var Lista, aux :TIPO_NODO;
      Begin
           writeln('Dime tu nombre: ');
           readln(nombreaux);
           nombre := nombreaux + '.cpb';
           assign(f,nombre);
           reset(f);
+          Inicializar (Lista);
+          aux=Lista;
+
+          AGREGAR (Lista, 'como');
+          AGREGAR (Lista, 'esta');
+          AGREGAR (Lista, 'hola');
+
+
           IF IORESULT <> 0 THEN
           begin
                writeLn('El archivo no existe');
