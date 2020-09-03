@@ -65,6 +65,7 @@ program Hello;
           case i of
                1: Cargar;
                2: Compilar;
+               3: exit;
           End;
           clrscr;
           until(i = 3);
