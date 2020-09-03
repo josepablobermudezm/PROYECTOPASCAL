@@ -46,6 +46,16 @@ program PROYECTO1;
           END;
      END;
 
+     procedure MostrarLista(VAR L :TIPO_LISTA);
+     Var aux :TIPO_LISTA;
+     Begin
+          while L <> nil do 
+          BEGIN
+               write(L^.PALABRA, ' ');
+               L := L^.SGTE;
+          END;
+     End;
+
      procedure Compilar;
      Begin
           writeln('Compilando...');
@@ -86,6 +96,8 @@ program PROYECTO1;
           AGREGAR (Lista, 'esta');
           AGREGAR (Lista, 'hola');
 
+          MostrarLista(Lista);
+
 
           IF IORESULT <> 0 THEN
           begin
@@ -97,7 +109,7 @@ program PROYECTO1;
                begin
                     Read( f, Caracter );    (* Leemos un de caracter en caracter *)
                     
-                    writeLn( Caracter );            (* Y la mostramos en pantalla*) 
+                    (*writeLn( Caracter );            (* Y la mostramos en pantalla*) 
                end;
                close(f);
           end;
