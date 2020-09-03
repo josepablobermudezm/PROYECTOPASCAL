@@ -45,7 +45,7 @@ Procedure AGREGAR (VAR L :TIPO_LISTA; ELE :TIPO_ARCHIVO);
         aux := L;
         while L^.SGTE <> nil do 
         BEGIN
-          L := L^SGTE;
+          L := L^.SGTE;
         END;
         L^.SGTE := New_Ele;
         New_Ele^.ANT := L;
