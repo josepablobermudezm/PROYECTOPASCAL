@@ -36,17 +36,21 @@ Procedure AGREGAR (VAR L :TIPO_LISTA; ELE :TIPO_ARCHIVO);
     New_Ele^.SGTE := nil;
     New_Ele^.ANT := nil;
     New_Ele^.PALABRA := ELE;
-    if L = nil then Begin { insetamos el primero}
-      L := New_Ele;
-    else
-      aux := L;
-      while L^.SGTE <> nil do Begin
-        L := L^SGTE;
-      End;
-      L^.SGTE := New_Ele;
-      New_Ele^.ANT := L;
-      L := aux;
-    end;
+    if L=NIL THEN { insetamos el primero}
+      BEGIN
+        L := New_Ele;
+      END
+    ELSE
+      BEGIN
+        aux := L;
+        while L^.SGTE <> nil do 
+        BEGIN
+          L := L^SGTE;
+        END;
+        L^.SGTE := New_Ele;
+        New_Ele^.ANT := L;
+        L := aux;
+      END;
   END;
 
 Procedure imprima;
