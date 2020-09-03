@@ -26,9 +26,8 @@ Procedure Inicializar (Var L :TIPO_LISTA);
     L^.ANT  := nil;
     L^.PALABRA.PALABRA :='';
   END;
-
 Procedure AGREGAR (VAR L :TIPO_LISTA; ELE :TIPO_ARCHIVO);
-  Var aux : TIPO_LISTA;
+  Var aux :TIPO_LISTA;
       New_Ele :TIPO_LISTA;
   Begin
     new(New_Ele);
