@@ -51,7 +51,7 @@ program PROYECTO1;
      Begin
           while L <> nil do 
           BEGIN
-               write(L^.PALABRA, ' ');
+               write(L^.PALABRA);
                L := L^.SGTE;
           END;
      End;
@@ -84,7 +84,7 @@ program PROYECTO1;
      Caracter : char;
      Var Lista, aux :TIPO_LISTA;
      Begin
-          writeln('Dime tu nombre: ');
+          writeln('Digite el nombre del archivo: ');
           readln(nombreaux);
           nombre := nombreaux + '.cpb';
           assign(f,nombre);
@@ -92,27 +92,22 @@ program PROYECTO1;
           Inicializar (Lista);
           aux:=Lista;
 
-          AGREGAR (Lista, 'como');
-          AGREGAR (Lista, 'esta');
-          AGREGAR (Lista, 'hola');
-
-          MostrarLista(Lista);
-
-
           IF IORESULT <> 0 THEN
           begin
                writeLn('El archivo no existe');
           end
           else
           begin
+               writeLn('Procesando...');
                while not eof( f) do
                begin
                     Read( f, Caracter );    (* Leemos un de caracter en caracter *)
-                    
+                    AGREGAR (Lista, Caracter);
                     (*writeLn( Caracter );            (* Y la mostramos en pantalla*) 
                end;
                close(f);
           end;
+          MostrarLista(Lista);
           repeat until keypressed;
      End;
 
