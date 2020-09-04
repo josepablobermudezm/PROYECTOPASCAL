@@ -63,13 +63,14 @@ program PROYECTO1;
      function traducir(cadena :string): string;
      var palabraAux :string[100];
          flag :boolean;
+         j : integer;
          {palabraAux :string[100];}
      begin
           
-          for i := 1 to Length(cadena) do
-          cadena[i] := UpCase(cadena[i]);
+          for j := 1 to Length(cadena) do
+          cadena[j] := UpCase(cadena[j]);
           
-          if(cadena = 'cpb') then
+          if(cadena = 'CPB') then
                begin
                palabraAux :='program';
                flag :=true;
