@@ -64,17 +64,18 @@ program PROYECTO1;
      procedure Compilar;
      var Archiv : text;
      var nombreArc : string;
+     aux :TIPO_LISTA;
      Begin
           writeln('Compilando...');
           nombreArc := nombreaux+'.pas';
           writeln(nombreArc);
           Assign(Archiv,nombreArc); {Asigna variable "Archiv" a Pueba.txt}
           ReWrite(Archiv); {Crea el archivo}
-
-          while Lista <> nil do 
+          aux := Lista;
+          while aux <> nil do 
           BEGIN
-               writeLn( Archiv, Lista^.PALABRA );
-               Lista := Lista^.SGTE;
+               write( Archiv, aux^.PALABRA );
+               aux := aux^.SGTE;
           END;
           writeln('ya');
           close( Archiv ); 
@@ -100,7 +101,7 @@ program PROYECTO1;
      var f: text;       (* Un fichero de texto *) 
      Var nombreArchivo:string[30];
      Caracter : char;
-     Lista, aux :TIPO_LISTA;
+     aux :TIPO_LISTA;
      var palabra :string[100];
      Begin
           writeln('Digite el nombre del archivo: ');
