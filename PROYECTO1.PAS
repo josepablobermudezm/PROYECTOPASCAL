@@ -165,16 +165,20 @@ program PROYECTO1;
                while not eof( f) do
                begin
                     Read( f, Caracter );    (* Leemos un de caracter en caracter *)
-                    if(caracter <> ' ') then
+                    if((caracter <> ' ') AND (caracter <> '\n')) then
                          begin
                               palabra := palabra + caracter;
                          end
-                    else
-                         begin
-                              AGREGAR (Lista, traducir(palabra));
-                              AGREGAR (Lista, ' ');
-                              palabra :='';
-                         end;
+                    else if (caracter = '\n') then
+                              begin
+                                   AGREGAR (Lista, '\n');
+                              end
+                         else
+                              begin
+                                   AGREGAR (Lista, traducir(palabra));
+                                   AGREGAR (Lista, ' ');
+                                   palabra :='';
+                              end;
                     (*writeLn( Caracter );            (* Y la mostramos en pantalla*) 
                end;
                close(f);
