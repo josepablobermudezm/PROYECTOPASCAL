@@ -4,14 +4,14 @@ program PROYECTO1;
      TYPE
           TIPO_LISTA = ^TIPO_NODO;
           TIPO_NODO = Record
-          PALABRA :STRING[50];
+          PALABRA :STRING[100];
           SGTE       :TIPO_LISTA;
           ANT        :TIPO_LISTA;
      END;
      
      VAR L_PALABRA :TIPO_LISTA;
      L_Cab :TIPO_LISTA;
-     PALABRA :STRING[50];
+     PALABRA :STRING[100];
 
      Procedure Inicializar (Var L :TIPO_LISTA);
      Begin
@@ -29,7 +29,7 @@ program PROYECTO1;
      New_Ele^.SGTE := nil;
      New_Ele^.ANT := nil;
      New_Ele^.PALABRA := ELE;
-     if L=NIL THEN { insetamos el primero}
+     if L=NIL THEN { insertamos el primero}
           BEGIN
           L := New_Ele;
           END
@@ -83,6 +83,7 @@ program PROYECTO1;
      Var nombreaux:string[30];
      Caracter : char;
      Var Lista, aux :TIPO_LISTA;
+     var palabra :string[100];
      Begin
           writeln('Digite el nombre del archivo: ');
           readln(nombreaux);
@@ -102,7 +103,11 @@ program PROYECTO1;
                while not eof( f) do
                begin
                     Read( f, Caracter );    (* Leemos un de caracter en caracter *)
-                    AGREGAR (Lista, Caracter);
+                    if(caracter <> ' ') then
+                    begin
+                         palabra := palabra + caracter;
+                    end;
+                    AGREGAR (Lista, palabra);
                     (*writeLn( Caracter );            (* Y la mostramos en pantalla*) 
                end;
                close(f);
@@ -138,9 +143,6 @@ program PROYECTO1;
 begin
      menu;
      clrscr;
-
       INICIALIZAR(L_PALABRA);
-      
-
      repeat until keypressed;
 end.
