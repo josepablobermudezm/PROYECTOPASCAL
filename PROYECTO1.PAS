@@ -8,7 +8,9 @@ program PROYECTO1;
           SGTE       :TIPO_LISTA;
           ANT        :TIPO_LISTA;
      END;
+
      
+     var nombreaux : string;
      VAR L_PALABRA :TIPO_LISTA;
      L_Cab :TIPO_LISTA;
      PALABRA :STRING[50];
@@ -57,8 +59,19 @@ program PROYECTO1;
      End;
 
      procedure Compilar;
+     var Archiv : text;
+     var nombreArc : string;
      Begin
           writeln('Compilando...');
+          nombreArc := nombreaux+'.pas';
+          writeln(nombreArc);
+          Assign(Archiv,nombreArc); {Asigna variable "Archiv" a Pueba.txt}
+          ReWrite(Archiv); {Crea el archivo}
+          writeLn( Archiv, 'Hola' );      (* Y escribimos *) 
+          writeLn( Archiv, 'Segunda linea' );
+          close( Archiv ); 
+
+
           repeat until keypressed;
      End;
 
@@ -79,15 +92,14 @@ program PROYECTO1;
 
      Procedure Cargar;
      var f: text;       (* Un fichero de texto *) 
-     Var nombre:string[30];
-     Var nombreaux:string[30];
+     Var nombreArchivo:string[30];
      Caracter : char;
      Var Lista, aux :TIPO_LISTA;
      Begin
           writeln('Digite el nombre del archivo: ');
           readln(nombreaux);
-          nombre := nombreaux + '.cpb';
-          assign(f,nombre);
+          nombreArchivo := nombreaux + '.cpb';
+          assign(f,nombreArchivo);
           reset(f);
           Inicializar (Lista);
           aux:=Lista;
