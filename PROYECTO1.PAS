@@ -65,15 +65,17 @@ program PROYECTO1;
          flag :boolean;
          {palabraAux :string[100];}
      begin
-          {palabraAux := UpCase(cadena);
-          for i := 1 to Length(s) do
-          s[i] := UpCase(s[i]);}
+          
+          for i := 1 to Length(cadena) do
+          cadena[i] := UpCase(cadena[i]);
+          
           if(cadena = 'cpb') then
                begin
                palabraAux :='program';
                flag :=true;
                end
           else 
+
                if(cadena = 'METODO') then
                     begin
                     palabraAux :='function';
