@@ -66,9 +66,10 @@ program PROYECTO1;
      var nombreArc : string;
      aux :TIPO_LISTA;
      Begin
-          writeln('Compilando...');
+          clrscr;
+          writeln('                     --------Compilando--------');
           nombreArc := nombreaux+'.pas';
-          writeln(nombreArc);
+          writeln('                     Nombre Del archivo: ' + nombreArc);
           Assign(Archiv,nombreArc); {Asigna variable "Archiv" a Pueba.txt}
           ReWrite(Archiv); {Crea el archivo}
           aux := Lista;
@@ -77,8 +78,10 @@ program PROYECTO1;
                write( Archiv, aux^.PALABRA );
                aux := aux^.SGTE;
           END;
-          writeln('ya');
-          close( Archiv ); 
+          writeln('                     Archivo Cargado!');
+          close( Archiv );
+          writeln(' '); 
+          writeln('                     Digite una tecla para continuar...'); 
           repeat until keypressed;
      End;
 
@@ -104,7 +107,9 @@ program PROYECTO1;
      aux :TIPO_LISTA;
      var palabra :string[100];
      Begin
-          writeln('Digite el nombre del archivo: ');
+          clrscr;
+          writeln('                     --------Cargando Archivo--------');
+          write('                     Digite el nombre del archivo: ');
           readln(nombreaux);
           nombreArchivo := nombreaux + '.cpb';
           assign(f,nombreArchivo);
@@ -114,11 +119,11 @@ program PROYECTO1;
 
           IF IORESULT <> 0 THEN
           begin
-               writeLn('El archivo no existe');
+               writeLn('                     El archivo no existe');
           end
           else
           begin
-               writeLn('Procesando...');
+               writeLn('                     Procesando...');
                while not eof( f) do
                begin
                     Read( f, Caracter );    (* Leemos un de caracter en caracter *)
@@ -137,6 +142,8 @@ program PROYECTO1;
                close(f);
           end;
           MostrarLista(Lista);
+          writeln(' '); 
+          writeln('                     Digite una tecla para continuar...'); 
           repeat until keypressed;
      End;
 
@@ -145,9 +152,13 @@ program PROYECTO1;
      Begin
           repeat
           clrscr;
-          writeln('1. Cargar Archivo');
-          writeln('2. Compilar');
-          writeln('3. Salir');
+          writeln('                     --------Menu Principal--------');
+		writeln('                     --------1- Cargar Archivo-----');
+		writeln('                     --------2- Compilar-----------');
+          writeln('                     --------3- Salir--------------');
+          writeln('                     ------------------------------');
+          writeln(' ');
+          write('                     Selecciona una opcion: ');
           readln(i);
           case i of
                1: Cargar;
