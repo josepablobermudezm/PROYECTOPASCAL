@@ -116,10 +116,15 @@ program PROYECTO1;
                begin
                     Read( f, Caracter );    (* Leemos un de caracter en caracter *)
                     if(caracter <> ' ') then
-                    begin
-                         palabra := palabra + caracter;
-                    end;
-                    AGREGAR (Lista, palabra);
+                         begin
+                              palabra := palabra + caracter;
+                         end
+                    else
+                         begin
+                              AGREGAR (Lista, palabra);
+                              AGREGAR (Lista, ' ');
+                              palabra :='';
+                         end;
                     (*writeLn( Caracter );            (* Y la mostramos en pantalla*) 
                end;
                close(f);
