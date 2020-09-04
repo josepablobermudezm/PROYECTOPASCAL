@@ -15,6 +15,8 @@ program PROYECTO1;
      L_Cab :TIPO_LISTA;
      PALABRA :STRING[100];
 
+     Var Lista :TIPO_LISTA;
+
      Procedure Inicializar (Var L :TIPO_LISTA);
      Begin
      NEW(L);
@@ -49,12 +51,13 @@ program PROYECTO1;
      END;
 
      procedure MostrarLista(VAR L :TIPO_LISTA);
-     Var aux :TIPO_LISTA;
+     var auxiliar : TIPO_LISTA;
      Begin
-          while L <> nil do 
+          auxiliar := L;
+          while auxiliar <> nil do 
           BEGIN
-               write(L^.PALABRA);
-               L := L^.SGTE;
+               write(auxiliar^.PALABRA);
+               auxiliar := auxiliar^.SGTE;
           END;
      End;
 
@@ -67,11 +70,14 @@ program PROYECTO1;
           writeln(nombreArc);
           Assign(Archiv,nombreArc); {Asigna variable "Archiv" a Pueba.txt}
           ReWrite(Archiv); {Crea el archivo}
-          writeLn( Archiv, 'Hola' );      (* Y escribimos *) 
-          writeLn( Archiv, 'Segunda linea' );
+
+          while Lista <> nil do 
+          BEGIN
+               writeLn( Archiv, Lista^.PALABRA );
+               Lista := Lista^.SGTE;
+          END;
+          writeln('ya');
           close( Archiv ); 
-
-
           repeat until keypressed;
      End;
 
@@ -94,7 +100,7 @@ program PROYECTO1;
      var f: text;       (* Un fichero de texto *) 
      Var nombreArchivo:string[30];
      Caracter : char;
-     Var Lista, aux :TIPO_LISTA;
+     Lista, aux :TIPO_LISTA;
      var palabra :string[100];
      Begin
           writeln('Digite el nombre del archivo: ');
