@@ -141,7 +141,7 @@ program PROYECTO1;
                end;
                close(f);
           end;
-          MostrarLista(Lista);
+          writeln('                     Archivo Cargado!'); 
           writeln(' '); 
           writeln('                     Digite una tecla para continuar...'); 
           repeat until keypressed;
