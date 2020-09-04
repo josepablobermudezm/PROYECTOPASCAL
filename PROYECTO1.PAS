@@ -60,6 +60,44 @@ program PROYECTO1;
                auxiliar := auxiliar^.SGTE;
           END;
      End;
+     function traducir(cadena :string): string;
+     var palabraAux :string[100];
+         flag :boolean;
+         {palabraAux :string[100];}
+     begin
+          {palabraAux := UpCase(cadena);
+          for i := 1 to Length(s) do
+          s[i] := UpCase(s[i]);}
+          if(cadena = 'cpb') then
+               begin
+               palabraAux :='program';
+               flag :=true;
+               end
+          else 
+               if(cadena = 'METODO') then
+                    begin
+                    palabraAux :='function';
+                    flag :=true;
+                    end
+               else 
+                    if (cadena = 'ENTERO') then
+                         begin
+                         palabraAux :='Integer';
+                         flag :=true;
+                         end
+                    else 
+                         if (cadena = 'CADENA') then
+                              begin
+                              palabraAux :='string';
+                              flag :=true;
+                              end
+                         else
+                              flag :=false;
+          if flag then
+               traducir:=palabraAux
+          else
+               traducir:=cadena;
+     end;
 
      procedure Compilar;
      var Archiv : text;
@@ -128,7 +166,7 @@ program PROYECTO1;
                          end
                     else
                          begin
-                              AGREGAR (Lista, palabra);
+                              AGREGAR (Lista, traducir(palabra));
                               AGREGAR (Lista, ' ');
                               palabra :='';
                          end;
