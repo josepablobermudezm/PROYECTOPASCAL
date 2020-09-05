@@ -1,54 +1,56 @@
 CPB Calculadora { 
-    entero num1, num2;
+    AGREGAR.SISTEMA; 
+
+    DECLARACION entero num1, num2; 
     METODO entero Sumar(n1,n2) { 
-        entero resultado;
+        DECLARACION entero resultado;
         resultado = n1+n2;
         DEVOLVER resultado;
-    }  
+    }.METODO  
     METODO entero Restar(n1,n2) { 
-        entero resultado;
+        DECLARACION entero resultado;
         resultado = n1-n2;
         DEVOLVER resultado;
-    } 
+    }.METODO  
     METODO entero Multiplicar(n1,n2) { 
-        entero resultado;
+        DECLARACION entero resultado;
         resultado = n1*n2;
         DEVOLVER resultado;
-    } 
+    }.METODO  
     METODO entero Dividir(n1,n2) { 
-        entero resultado;
+        DECLARACION entero resultado;
         resultado = n1/n2;
         DEVOLVER resultado;
-    }
+    }.METODO  
     PROGRAMA { 
         !!Aquí comienza el programa!! 
-        entero variable;
-        REPETIR { 
-            SISTEMA.LIMPIAR();
-            SISTEMA.MOSTRAR(“Digite los números a calcular: ”);
-            SISTEMA.OBTENER(num1);
-            SISTEMA.OBTENER(num2);
-            SISTEMA.MOSTRAR(“1) SUMAR”);
-            SISTEMA.MOSTRAR(“2) RESTAR”);
-            SISTEMA.MOSTRAR(“3) MULTIPLICAR”);
-            SISTEMA.MOSTRAR(“4) DIVIDIR”);
-            SISTEMA.MOSTRAR(“5) SALIR);
-            SISTEMA.OBTENER(variable);
+        DECLARACION entero variable;
+        REPETIR{ 
+            SISTEMA.LIMPIAR(); 
+            SISTEMA.MOSTRAR ('Digite los números a calcular: ');
+            SISTEMA.OBTENER (num1);
+            SISTEMA.OBTENER (num2);
+            SISTEMA.MOSTRAR ( '1) SUMAR' );
+            SISTEMA.MOSTRAR ( '2) RESTAR' );
+            SISTEMA.MOSTRAR ( '3) MULTIPLICAR' );
+            SISTEMA.MOSTRAR ( '4) DIVIDIR' );
+            SISTEMA.MOSTRAR ( '5) SALIR' );
+            SISTEMA.OBTENER (variable);
             CASO (variable) { 
-                1: {  
-                    SISTEMA.MOSTRAR(“El resultado de la suma es: ”+SISTEMA.LLAMAR.Sumar(num1,num2));
-                }
-                2: {  
-                    SISTEMA.MOSTRAR(“El resultado de la resta es: ”+SISTEMA.LLAMAR.Restar(num1,num2));
-                }
-                3: {  
-                    SISTEMA.MOSTRAR(“El resultado de la multiplicación es: ”+SISTEMA.LLAMAR.Multiplicar(num1,num2));
-                }
+                1: {   
+                    SISTEMA.MOSTRAR ('El resultado de la suma es: ' + SISTEMA.LLAMAR. Sumar (num1,num2));
+                } 
+                2: {   
+                    SISTEMA.MOSTRAR ('El resultado de la resta es: ' + SISTEMA.LLAMAR. Restar (num1,num2));
+                } 
+                3: {   
+                    SISTEMA.MOSTRAR ('El resultado de la multiplicación es: ' + SISTEMA.LLAMAR. Multiplicar (num1,num2));
+                } 
                 4: {  
-                    SISTEMA.MOSTRAR(“El resultado de la división es: ”+SISTEMA.LLAMAR.Dividir(num1,num2));
-                }
-                    SISTEMA.ESPERAR();
-            }
-        }HASTA(variable==5)
-    }
-}
+                    SISTEMA.MOSTRAR ('El resultado de la división es: ' + SISTEMA.LLAMAR. Dividir (num1,num2));
+                } 
+                SISTEMA.ESPERAR(); 
+            } 
+        }HASTA (variable==5)
+    } 
+ };  
