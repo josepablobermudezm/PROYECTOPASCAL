@@ -75,27 +75,129 @@ program PROYECTO1;
                palabraAux :='program';
                flag :=true;
                end
-          else 
-
-               if(cadena = 'METODO') then
-                    begin
-                    palabraAux :='function';
-                    flag :=true;
-                    end
-               else 
-                    if (cadena = 'ENTERO') then
-                         begin
-                         palabraAux :='Integer';
-                         flag :=true;
-                         end
-                    else 
-                         if (cadena = 'CADENA') then
-                              begin
-                              palabraAux :='string';
-                              flag :=true;
-                              end
-                         else
-                              flag :=false;
+          else if(cadena = 'METODO') then
+               begin
+               palabraAux :='function';
+               flag :=true;
+               end
+          else if (cadena = 'ENTERO') then
+               begin
+               palabraAux :='Integer';
+               flag :=true;
+               end
+          else if (cadena = 'CADENA') then
+               begin
+               palabraAux :='string';
+               flag :=true;
+               end
+          else if (cadena = 'LOGICO') then
+               begin
+               palabraAux :='boolean';
+               flag :=true;
+               end     
+          else if (cadena = 'FLOTANTE') then
+               begin
+               palabraAux :='real';
+               flag :=true;
+               end
+          else if (cadena = 'CARACTER') then
+               begin
+               palabraAux :='char';
+               flag :=true;
+               end
+          else if (cadena = 'CARACTER') then
+               begin
+               palabraAux :='char';
+               flag :=true;
+               end 
+          else if (cadena = 'PROCEDIMIENTO') then
+               begin
+               palabraAux :='procedure';
+               flag :=true;
+               end  
+          else if (cadena = 'SISTEMA.ESPERAR();') then
+               begin
+               palabraAux :='repeat until key pressed;';
+               flag :=true;
+               end   
+          else if (cadena = 'SISTEMA.LIMPIAR();') then
+               begin
+               palabraAux :='clrscr;';
+               flag :=true;
+               end       
+          else if (cadena = 'SISTEMA.OBTENER') then
+               begin
+               palabraAux :='readLn';
+               flag :=true;
+               end    
+          else if (cadena = 'SISTEMA.MOSTRAR') then
+               begin
+               palabraAux :='writeLn';
+               flag :=true;
+               end       
+          else if (cadena = 'SISTEMA.LLAMAR.') then
+               begin
+               palabraAux :=' ';
+               flag :=true;
+               end 
+          else if (cadena = 'REPETIR{') then
+               begin
+               palabraAux :='repeat';
+               flag :=true;
+               end   
+          else if (cadena = '}HASTA') then
+               begin
+               palabraAux :='until';
+               flag :=true;
+               end
+          {else if (cadena = 'DEVOLVER') then  Analizar
+               begin
+               palabraAux :='until';
+               flag :=true;
+               end }                
+          else if (cadena = '{') then
+               begin
+               palabraAux :='BEGIN';
+               flag :=true;
+               end
+          else if (cadena = '}') then
+               begin
+               palabraAux :='END';
+               flag :=true;
+               end  
+          else if (cadena = '};') then
+               begin
+               palabraAux :='END.';
+               flag :=true;
+               end  
+          else if (cadena = '==') then
+               begin
+               palabraAux :='=';
+               flag :=true;
+               end            
+          else if (cadena = '=') then
+               begin
+               palabraAux :=':=';
+               flag :=true;
+               end
+          else if (cadena = '=') then
+               begin
+               palabraAux :=':=';
+               flag :=true;
+               end
+          else if (cadena = '}.METODO') then
+               begin
+               palabraAux :='END;';
+               flag :=true;
+               end
+          else if (cadena = 'PROGRAMA') then
+               begin
+               palabraAux :='';
+               flag :=true;
+               end                                      
+          else
+               flag :=false;          
+                              
           if flag then
                traducir:=palabraAux
           else
