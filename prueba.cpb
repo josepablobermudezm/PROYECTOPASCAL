@@ -51,6 +51,6 @@ CPB Calculadora {
                 } 
                 SISTEMA.ESPERAR(); 
             } 
-        }HASTA (variable==5)
+        }HASTA (variable == 5)
     } 
  };  
