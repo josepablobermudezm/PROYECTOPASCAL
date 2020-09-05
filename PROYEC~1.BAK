@@ -1,13 +1,75 @@
-program Hello;
-     Uses crt, LISTA;
+program PROYECTO1;
+     Uses crt,Lista;
      
+     var nombreaux : string;
      VAR L_PALABRA :TIPO_LISTA;
      L_Cab :TIPO_LISTA;
-     PALABRA :STRING[50];
+     PALABRA :STRING[100];
+
+     VAR ListaLenguaje :TIPO_LISTA;
+
+     function traducir(cadena :string): string;
+     var palabraAux :string[100];
+         flag :boolean;
+         j : integer;
+     begin
+          
+          for j := 1 to Length(cadena) do
+          cadena[j] := UpCase(cadena[j]);
+          
+          if(cadena = 'CPB') then
+               begin
+               palabraAux :='program';
+               flag :=true;
+               end
+          else 
+
+               if(cadena = 'METODO') then
+                    begin
+                    palabraAux :='function';
+                    flag :=true;
+                    end
+               else 
+                    if (cadena = 'ENTERO') then
+                         begin
+                         palabraAux :='Integer';
+                         flag :=true;
+                         end
+                    else 
+                         if (cadena = 'CADENA') then
+                              begin
+                              palabraAux :='string';
+                              flag :=true;
+                              end
+                         else
+                              flag :=false;
+          if flag then
+               traducir:=palabraAux
+          else
+               traducir:=cadena;
+     end;
 
      procedure Compilar;
+     var Archiv : text;
+     var nombreArc : string;
+     aux :TIPO_LISTA;
      Begin
-          writeln('Compilando...');
+          clrscr;
+          writeln('                     --------Compilando--------');
+          nombreArc := nombreaux+'.pas';
+          writeln('                     Nombre Del archivo: ' + nombreArc);
+          Assign(Archiv,nombreArc); {Asigna variable "Archiv" a Pueba.txt}
+          ReWrite(Archiv); {Crea el archivo}
+          aux := ListaLenguaje;
+          while aux <> nil do 
+          BEGIN
+               write( Archiv, aux^.PALABRA );
+               aux := aux^.SGTE;
+          END;
+          writeln('                     Archivo Cargado!');
+          close( Archiv );
+          writeln(' '); 
+          writeln('                     Digite una tecla para continuar...'); 
           repeat until keypressed;
      End;
 
@@ -28,28 +90,52 @@ program Hello;
 
      Procedure Cargar;
      var f: text;       (* Un fichero de texto *) 
-     Var nombre:string[30];
-     Var nombreaux:string[30];
+     Var nombreArchivo:string[30];
      Caracter : char;
+     aux :TIPO_LISTA;
+     var palabra :STRING[100];
      Begin
-          writeln('Dime tu nombre: ');
+          clrscr;
+          writeln('                     --------Cargando Archivo--------');
+          write('                     Digite el nombre del archivo: ');
           readln(nombreaux);
-          nombre := nombreaux + '.cpb';
-          assign(f,nombre);
+          nombreArchivo := nombreaux + '.cpb';
+          assign(f,nombreArchivo);
           reset(f);
+          Inicializar (ListaLenguaje);
+          aux:=ListaLenguaje;
+
           IF IORESULT <> 0 THEN
           begin
-               writeLn('El archivo no existe');
+               writeLn('                     El archivo no existe');
           end
           else
           begin
+               writeLn('                     Procesando...');
                while not eof( f) do
                begin
                     Read( f, Caracter );    (* Leemos un de caracter en caracter *)
-                    writeLn( Caracter );            (* Y la mostramos en pantalla*) 
+                    if((caracter <> ' ') AND (caracter <> '\n')) then
+                         begin
+                              palabra := palabra + caracter;
+                         end
+                    else if (caracter = '\n') then
+                              begin
+                                   AGREGAR(ListaLenguaje);
+                              end
+                         else
+                              begin
+                                   AGREGAR (ListaLenguaje, traducir(palabra));
+                                   AGREGAR (ListaLenguaje, ' ');
+                                   palabra :='';
+                              end;
+                    (*writeLn( Caracter );            (* Y la mostramos en pantalla*) 
                end;
                close(f);
           end;
+          writeln('                     Archivo Cargado!'); 
+          writeln(' '); 
+          writeln('                     Digite una tecla para continuar...'); 
           repeat until keypressed;
      End;
 
@@ -58,14 +144,17 @@ program Hello;
      Begin
           repeat
           clrscr;
-          writeln('1. Cargar Archivo');
-          writeln('2. Compilar');
-          writeln('3. Salir');
+          writeln('                     --------Menu Principal--------');
+		writeln('                     --------1- Cargar Archivo-----');
+		writeln('                     --------2- Compilar-----------');
+          writeln('                     --------3- Salir--------------');
+          writeln('                     ------------------------------');
+          writeln(' ');
+          write('                     Selecciona una opcion: ');
           readln(i);
           case i of
                1: Cargar;
                2: Compilar;
-               3: exit;
           End;
           clrscr;
           until(i = 3);
@@ -81,9 +170,6 @@ program Hello;
 begin
      menu;
      clrscr;
-
-      INICIALIZAR(L_PALABRA);
-      
-
+     INICIALIZAR(L_PALABRA);
      repeat until keypressed;
 end.
