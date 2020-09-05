@@ -180,7 +180,7 @@ program PROYECTO1;
                write( Archiv, aux^.PALABRA );
                aux := aux^.SGTE;
           END;
-          writeln('                     Archivo Cargado!');
+          writeln('                     Archivo Compilado!');
           close( Archiv );
           writeln(' '); 
           writeln('                     Digite una tecla para continuar...'); 
