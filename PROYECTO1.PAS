@@ -190,11 +190,22 @@ program PROYECTO1;
                palabraAux :='END;';
                flag :=true;
                end
+               
           else if (cadena = 'PROGRAMA') then
                begin
                palabraAux :='';
                flag :=true;
-               end                                      
+               end  
+          else if (cadena = 'AGREGAR.SISTEMA;') then
+               begin
+               palabraAux :='Uses crt;';
+               flag :=true;
+               end    
+          else if (cadena = 'DECLARACION') then
+               begin
+               palabraAux :='var';
+               flag :=true;
+               end                                             
           else
                flag :=false;          
                               
