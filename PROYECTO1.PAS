@@ -144,7 +144,7 @@ program PROYECTO1;
      Procedure Cargar;
      var f: text;       (* Un fichero de texto *) 
      Var nombreArchivo:string[30];
-     Caracter : char;
+     caracter : char;
      aux :TIPO_LISTA;
      var palabra :string[100];
      Begin
@@ -167,21 +167,24 @@ program PROYECTO1;
                writeLn('                     Procesando...');
                while not eof( f) do
                begin
-                    Read( f, Caracter );    (* Leemos un de caracter en caracter *)
-                    if((caracter <> ' ') AND (caracter <> '\n')) then
+                    
+                    Read( f, caracter );    (* Leemos un de caracter en caracter *)
+                    
+                    if((caracter <> ' ') AND (ord(caracter)<>10)) then
                          begin
+                              
                               palabra := palabra + caracter;
                          end
-                    else if (caracter = '\n') then
-                              begin
-                                   AGREGAR (Lista, '\n');
-                              end
-                         else
-                              begin
-                                   AGREGAR (Lista, traducir(palabra));
-                                   AGREGAR (Lista, ' ');
-                                   palabra :='';
-                              end;
+                    else if (ord(caracter ) =10 ) then
+                         begin
+                              AGREGAR (Lista, ' ');
+                         end
+                    else
+                         begin    
+                              AGREGAR (Lista, traducir(palabra));
+                              AGREGAR (Lista, ' ');
+                              palabra :='';
+                    end;
                     (*writeLn( Caracter );            (* Y la mostramos en pantalla*) 
                end;
                close(f);
