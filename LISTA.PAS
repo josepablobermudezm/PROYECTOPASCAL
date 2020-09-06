@@ -10,10 +10,13 @@ Type
     ANT        :TIPO_LISTA;
 END;
 
+var valido :boolean;
+
 Procedure Inicializar (Var L :TIPO_LISTA);
 Procedure imprima;
 Procedure AGREGAR(VAR L :TIPO_LISTA; ELE :STRING);
 Procedure MostrarLista(Var L :TIPO_LISTA);
+Procedure Validarllaves(VAR L :TIPO_LISTA);
 
 IMPLEMENTATION
 Procedure Inicializar (Var L :TIPO_LISTA);
@@ -48,6 +51,33 @@ Procedure AGREGAR (VAR L :TIPO_LISTA; ELE :STRING);
         L := aux;
         END;
     END;
+
+procedure Validarllaves(VAR L :TIPO_LISTA);
+    var auxiliar : TIPO_LISTA;
+        llaveA, llaveC :integer;
+    Begin
+        auxiliar := L;
+        llaveA := 0;
+        llaveC := 0;
+        valido := false; { valido es una variable global }
+        while auxiliar <> nil do 
+            BEGIN
+                write(auxiliar^.PALABRA);
+                if(auxiliar^.PALABRA = '{') then
+                    begin
+                        llaveA := llaveA + 1;
+                    end;
+                if (auxiliar^.PALABRA = '}') then
+                    begin
+                        llaveC := llaveC + 1;
+                    end;
+                auxiliar := auxiliar^.SGTE;
+            END;
+        if(((llaveA <> 0) AND (llaveC <> 0)) AND (llaveA = llaveC)) then
+            begin
+                valido := true;
+            end;
+    End;
 
 procedure MostrarLista(VAR L :TIPO_LISTA);
     var auxiliar : TIPO_LISTA;
