@@ -2,25 +2,25 @@ CPB Calculadora {
     AGREGAR.SISTEMA; 
 
     DECLARACION entero num1, num2, resultado; 
-    METODO entero Sumar(n1,n2) 
+    METODO entero Sumar(n1,n2: entero )  
         DECLARACION entero resultado; 
     { 
         resultado = n1+n2;
         DEVOLVER resultado;
     }.METODO  
-    METODO entero Restar(n1,n2)
+    METODO entero Restar(n1,n2: entero ) 
     DECLARACION entero resultado; 
     { 
         resultado = n1-n2;
         DEVOLVER resultado;
     }.METODO  
-    METODO entero Multiplicar(n1,n2) 
+    METODO entero Multiplicar(n1,n2: entero )  
     DECLARACION entero resultado;
     { 
         resultado = n1*n2;
         DEVOLVER resultado;
     }.METODO  
-    METODO entero Dividir(n1,n2) 
+    METODO entero Dividir(n1,n2: entero ) 
     DECLARACION flotante resultado;
     { 
         resultado = n1/n2;

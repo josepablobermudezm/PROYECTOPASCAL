@@ -8,14 +8,15 @@ program PROYECTO1;
      caso :boolean;
      casoLLaves :integer;
      comentario :boolean;
-     
+     metodo :string;
+     isMetodo: boolean; 
 
      VAR ListaLenguaje :TIPO_LISTA;
 
      function traducir(cadena :string) : string;
           var palabraAux :string;
-         flag :boolean;
-         j : integer;
+          flag :boolean;
+          j : integer;
      begin
           
           for j := 1 to Length(cadena) do
@@ -26,37 +27,75 @@ program PROYECTO1;
                palabraAux :='program';
                flag :=true;
                end
-          else if(cadena = 'METODO') then
+          else if(isMetodo) then 
                begin
-               palabraAux :='function';
-               flag :=true;
-               end
-          else if (cadena = 'ENTERO') then
+                    if (cadena = ')') then
+                         begin
+                              (*Se llama a traducir para obtener el tipo de metodo que necesita la funcion*)
+                              isMetodo:=false;
+                              palabraAux :='):'+traducir(metodo)+';';
+                              writeLn(palabraAux);
+                              flag :=true;
+                              metodo:='';
+                         end
+                    else if(( (cadena ='ENTERO') OR (cadena ='FLOTANTE')) AND (metodo='')) then
+                         begin
+                              (*Se guarda en una variable global el tipo de metodo*)
+                              metodo := cadena;
+                              palabraAux :='';
+                              flag :=true;
+                         end
+                    else if (((cadena ='CARACTER') OR (cadena ='CADENA') OR (cadena ='LOGICO')) AND (metodo=' '))  then
+                         begin
+                              (*Se guarda en una variable global el tipo de metodo*)
+                              metodo := cadena;
+                              palabraAux :='';
+                              flag :=true;
+                         end 
+                    else if(( (cadena ='ENTERO') OR (cadena ='FLOTANTE'))) then
+                         begin
+                              (*Se guarda en una variable global el tipo de metodo*)
+                              isMetodo:=false;
+                              palabraAux :=traducir(cadena);
+                              isMetodo:=true;
+                              flag :=true;
+                         end
+                    else if (((cadena ='CARACTER') OR (cadena ='CADENA') OR (cadena ='LOGICO')))  then
+                         begin
+                              (*Se guarda en una variable global el tipo de metodo*)
+                              isMetodo:=false;
+                              palabraAux :=traducir(cadena);
+                              isMetodo:=true;
+                              flag :=true;
+                         end      
+                    else 
+                         begin
+                              flag:=false; 
+                         end
+                                  
+               end                      
+          else if ((cadena = 'ENTERO')) then
                begin
                palabraAux :='Integer';
                flag :=true;
                end
-          else if (cadena = 'CADENA') then
+              
+          else if ((cadena = 'CADENA')) then
                begin
                palabraAux :='string';
                flag :=true;
                end
-          else if (cadena = 'LOGICO') then
+          else if ((cadena = 'LOGICO') ) then
                begin
                palabraAux :='boolean';
                flag :=true;
                end     
-          else if (cadena = 'FLOTANTE') then
+          else if ((cadena = 'FLOTANTE')) then
                begin
                palabraAux :='real';
                flag :=true;
                end
-          else if (cadena = 'CARACTER') then
-               begin
-               palabraAux :='char';
-               flag :=true;
-               end
-          else if (cadena = 'CARACTER') then
+          else if ((cadena = 'CARACTER')) then
                begin
                palabraAux :='char';
                flag :=true;
@@ -125,6 +164,7 @@ program PROYECTO1;
           else if ((cadena = '}') and (caso) and (casoLLaves = 1) ) then
                begin
                palabraAux :='';
+               
                casoLLaves := casoLLaves - 1;
                caso := false;
                flag :=true;
@@ -203,13 +243,13 @@ program PROYECTO1;
                caso := false;
                flag :=true;
                end 
-          else if ((cadena = ')') and (caso) ) then
+          else if ((cadena = ')') and (caso) and NOT (isMetodo)) then
                begin
                palabraAux :=' of';
                caso := true;
                flag :=true;
                end 
-          else if ((cadena = ')') and ( not caso) ) then
+          else if ((cadena = ')') and ( not caso) and NOT (isMetodo)) then
                begin
                palabraAux :=')';
                caso := true;
@@ -226,9 +266,18 @@ program PROYECTO1;
                palabraAux :='{';
                comentario := true;
                flag :=true;
-               end   
+               end 
+          else if(cadena = 'METODO') then
+               begin
+               {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
+               isMetodo := true;
+               palabraAux :='function';
+               flag :=true;
+               end            
           else
                flag :=false;          
+
+          
                               
           if flag then
                traducir:=palabraAux
@@ -367,6 +416,7 @@ begin
      caso := false;
      comentario := false;
      casoLLaves := 0;
+     metodo:='';
      menu;
      clrscr;
      INICIALIZAR(L_PALABRA);
