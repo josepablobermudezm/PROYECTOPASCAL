@@ -18,7 +18,6 @@ END;
 var valido :boolean;
 
 Procedure Inicializar (Var L :TIPO_LISTA);
-Procedure imprima;
 Procedure AGREGAR(VAR L :TIPO_LISTA; ELE :STRING);
 Procedure MostrarLista(Var L :TIPO_LISTA);
 Procedure Validarllaves(VAR L :TIPO_LISTA);
@@ -32,6 +31,7 @@ Procedure Inicializar (Var L :TIPO_LISTA);
         L^.PALABRA :='';
     END;
 
+{ Procedimiento para agregar palabras al final en la lista}
 Procedure AGREGAR (VAR L :TIPO_LISTA; ELE :STRING);
     Var aux :TIPO_LISTA;
         New_Ele :TIPO_LISTA;
@@ -56,7 +56,9 @@ Procedure AGREGAR (VAR L :TIPO_LISTA; ELE :STRING);
         L := aux;
         END;
     END;
-
+{Procedimiento que se encarga de validar que la cantidad de llaves sea correcta
+en el lenguaje escrito por el usuario para su posterior traducción a código intermedio
+}
 procedure Validarllaves(VAR L :TIPO_LISTA);
     var auxiliar : TIPO_LISTA;
         llaveA, llaveC :integer;
@@ -93,11 +95,4 @@ procedure MostrarLista(VAR L :TIPO_LISTA);
             auxiliar := auxiliar^.SGTE;
         END;
     End;
-
-Procedure imprima;
-  Begin
-    clrscr;
-    gotoxy(15,8);
-    writeln('HOLA');
-  END;
 END.
