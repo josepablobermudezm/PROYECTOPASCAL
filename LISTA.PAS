@@ -62,7 +62,6 @@ procedure Validarllaves(VAR L :TIPO_LISTA);
         valido := false; { valido es una variable global }
         while auxiliar <> nil do 
             BEGIN
-                write(auxiliar^.PALABRA);
                 if(auxiliar^.PALABRA = '{') then
                     begin
                         llaveA := llaveA + 1;
