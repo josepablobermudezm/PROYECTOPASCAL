@@ -7,6 +7,7 @@ program PROYECTO1;
      PALABRA :STRING[100];
      caso :boolean;
      casoLLaves :integer;
+     comentario :boolean;
      
 
      VAR ListaLenguaje :TIPO_LISTA;
@@ -213,7 +214,19 @@ program PROYECTO1;
                palabraAux :=')';
                caso := true;
                flag :=true;
-               end                                          
+               end   
+          else if ((cadena = '!') and ( comentario) ) then
+               begin
+               palabraAux :='}';
+               comentario := false;
+               flag :=true;
+               end 
+          else if ((cadena = '!')) then
+               begin
+               palabraAux :='{';
+               comentario := true;
+               flag :=true;
+               end   
           else
                flag :=false;          
                               
@@ -352,6 +365,7 @@ program PROYECTO1;
 
 begin
      caso := false;
+     comentario := false;
      casoLLaves := 0;
      menu;
      clrscr;
