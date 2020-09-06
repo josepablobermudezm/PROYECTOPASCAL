@@ -36,17 +36,17 @@ CPB Calculadora {
             SISTEMA.MOSTRAR ( '4) DIVIDIR' );
             SISTEMA.MOSTRAR ( '5) SALIR' );
             SISTEMA.OBTENER (variable);
-            CASO (variable) { 
-                1: {   
+            CASO ( variable ) { 
+                1: { 
                     SISTEMA.MOSTRAR ('El resultado de la suma es: ' + SISTEMA.LLAMAR. Sumar (num1,num2));
                 } 
-                2: {   
+                2: { 
                     SISTEMA.MOSTRAR ('El resultado de la resta es: ' + SISTEMA.LLAMAR. Restar (num1,num2));
                 } 
-                3: {   
+                3: { 
                     SISTEMA.MOSTRAR ('El resultado de la multiplicación es: ' + SISTEMA.LLAMAR. Multiplicar (num1,num2));
                 } 
-                4: {  
+                4: { 
                     SISTEMA.MOSTRAR ('El resultado de la división es: ' + SISTEMA.LLAMAR. Dividir (num1,num2));
                 } 
                 SISTEMA.ESPERAR(); 
