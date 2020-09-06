@@ -7,21 +7,19 @@ CPB Calculadora {
     { 
         resultado = n1+n2;
         DEVOLVER resultado;
-<<<<<<< HEAD
-    } .METODO  
+    }.METODO  
     METODO entero Restar(n1,n2) { 
         DECLARACION entero resultado;
         resultado = n1-n2;
         DEVOLVER resultado;
-    } .METODO  
+    }.METODO  
     METODO entero Multiplicar(n1,n2) { 
         DECLARACION entero resultado;
         resultado = n1*n2;
         DEVOLVER resultado;
-    } .METODO  
+    }.METODO  
     METODO entero Dividir(n1,n2) { 
         DECLARACION entero resultado;
-=======
     }.METODO  
     METODO entero Restar(n1,n2)
     DECLARACION entero resultado; 
@@ -38,10 +36,9 @@ CPB Calculadora {
     METODO entero Dividir(n1,n2) 
     DECLARACION flotante resultado;
     { 
->>>>>>> f4f30bca93a00b8fd7cde455612d80b24a361015
         resultado = n1/n2;
         DEVOLVER resultado;
-    } .METODO  
+    }.METODO  
     PROGRAMA { 
         ! Aquí comienza el programa ! 
         DECLARACION entero variable;
@@ -73,4 +70,4 @@ CPB Calculadora {
             }  
         } HASTA (variable == 5)
     } 
- } ;  
+ };  
