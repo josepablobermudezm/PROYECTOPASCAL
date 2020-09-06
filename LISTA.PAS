@@ -1,3 +1,8 @@
+{
+    Unidad dedicada a la lista de palabras que vamos a tener del lenguaje escrito
+    por el usuario dicha lista funcionará para almacenar tanto el lenguaje de manera
+    original y para traducir al lenguaje intermedio
+}
 UNIT LISTA;
 INTERFACE
 USES CRT;
