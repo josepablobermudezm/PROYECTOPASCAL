@@ -12,6 +12,7 @@ program PROYECTO1;
      isMetodo: boolean; 
 
      VAR ListaLenguaje :TIPO_LISTA;
+         ListaAux :TIPO_LISTA;
 
      function traducir(cadena :string) : string;
           var palabraAux :string;
@@ -291,6 +292,16 @@ program PROYECTO1;
      aux :TIPO_LISTA;
      Begin
           clrscr;
+          Validarllaves(ListaAux);
+          if valido then
+               begin
+                    write('FUNCIONA');
+               end
+          else
+               begin
+                    write('NO CUMPLE');
+               end;
+          
           writeln('                     --------Compilando--------');
           nombreArc := nombreaux+'.pas';
           writeln('                     Nombre Del archivo: ' + nombreArc);
@@ -328,7 +339,6 @@ program PROYECTO1;
      var f: text;       (* Un fichero de texto *) 
      Var nombreArchivo:string[30];
      caracter : char;
-     aux :TIPO_LISTA;
      var palabra :string;
      var parametro: string;
      var espacio :string;
@@ -341,7 +351,7 @@ program PROYECTO1;
           assign(f,nombreArchivo);
           reset(f);
           Inicializar (ListaLenguaje);
-          aux:=ListaLenguaje;
+          Inicializar(ListaAux);
 
           IF IORESULT <> 0 THEN
           begin
@@ -358,7 +368,6 @@ program PROYECTO1;
                     
                     if((caracter <> ' ') AND (ord(caracter)<>10)) then
                          begin
-                              
                               palabra := palabra + caracter;
                          end
                     else if (ord(caracter ) =10 ) then
@@ -370,6 +379,8 @@ program PROYECTO1;
                          begin   
                               espacio :=' '; 
                               parametro := traducir(palabra);
+                              AGREGAR(ListaAux, palabra);
+                              AGREGAR(ListaAux, espacio);
                               AGREGAR (ListaLenguaje, parametro);
                               AGREGAR (ListaLenguaje, espacio);
                               palabra :='';
