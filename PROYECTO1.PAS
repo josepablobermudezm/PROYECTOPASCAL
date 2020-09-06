@@ -35,7 +35,6 @@ program PROYECTO1;
                               (*Se llama a traducir para obtener el tipo de metodo que necesita la funcion*)
                               isMetodo:=false;
                               palabraAux :='):'+traducir(metodo)+';';
-                              writeLn(palabraAux);
                               flag :=true;
                               metodo:='';
                          end
