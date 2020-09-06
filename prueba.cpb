@@ -1,29 +1,33 @@
 CPB Calculadora { 
     AGREGAR.SISTEMA; 
 
-    DECLARACION entero num1, num2; 
-    METODO entero Sumar(n1,n2) { 
-        DECLARACION entero resultado;
+    DECLARACION entero num1, num2, resultado; 
+    METODO entero Sumar(n1,n2) 
+        DECLARACION entero resultado; 
+    { 
         resultado = n1+n2;
         DEVOLVER resultado;
     }.METODO  
-    METODO entero Restar(n1,n2) { 
-        DECLARACION entero resultado;
+    METODO entero Restar(n1,n2)
+    DECLARACION entero resultado; 
+    { 
         resultado = n1-n2;
         DEVOLVER resultado;
     }.METODO  
-    METODO entero Multiplicar(n1,n2) { 
-        DECLARACION entero resultado;
+    METODO entero Multiplicar(n1,n2) 
+    DECLARACION entero resultado;
+    { 
         resultado = n1*n2;
         DEVOLVER resultado;
     }.METODO  
-    METODO entero Dividir(n1,n2) { 
-        DECLARACION entero resultado;
+    METODO entero Dividir(n1,n2) 
+    DECLARACION flotante resultado;
+    { 
         resultado = n1/n2;
         DEVOLVER resultado;
     }.METODO  
     PROGRAMA { 
-        !!Aquí comienza el programa!! 
+        ! Aquí comienza el programa ! 
         DECLARACION entero variable;
         REPETIR{ 
             SISTEMA.LIMPIAR(); 
