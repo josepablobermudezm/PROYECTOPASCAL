@@ -5,6 +5,9 @@ program PROYECTO1;
      VAR L_PALABRA :TIPO_LISTA;
      L_Cab :TIPO_LISTA;
      PALABRA :STRING[100];
+     caso :boolean;
+     casoLLaves :integer;
+     
 
      VAR ListaLenguaje :TIPO_LISTA;
 
@@ -12,7 +15,6 @@ program PROYECTO1;
           var palabraAux :string;
          flag :boolean;
          j : integer;
-         {palabraAux :string[100];}
      begin
           
           for j := 1 to Length(cadena) do
@@ -98,6 +100,34 @@ program PROYECTO1;
                palabraAux :='until';
                flag :=true;
                end
+          else if ((cadena = '{') and (caso) and (casoLLaves = 0) ) then
+               begin
+               palabraAux :='';
+               casoLLaves := casoLLaves + 1;
+               caso := true;
+               flag :=true;
+               end    
+          else if ((cadena = '{') and (caso) and (casoLLaves = 1) ) then
+               begin
+               palabraAux :='BEGIN';
+               casoLLaves := casoLLaves + 1;
+               caso := true;
+               flag :=true;
+               end  
+          else if ((cadena = '}') and (caso) and (casoLLaves = 2) ) then
+               begin
+               palabraAux :='END;';
+               casoLLaves := casoLLaves - 1;
+               caso := true;
+               flag :=true;
+               end 
+          else if ((cadena = '}') and (caso) and (casoLLaves = 1) ) then
+               begin
+               palabraAux :='';
+               casoLLaves := casoLLaves - 1;
+               caso := false;
+               flag :=true;
+               end
           {else if (cadena = 'DEVOLVER') then  Analizar
                begin
                palabraAux :='until';
@@ -153,7 +183,37 @@ program PROYECTO1;
                begin
                palabraAux :='var';
                flag :=true;
-               end                                             
+               end     
+          else if (cadena = 'CASO') then
+               begin
+               palabraAux :='case';
+               caso := true;
+               flag :=true;
+               end
+          else if ((cadena = '(') and (caso) ) then
+               begin
+               palabraAux :='';
+               caso := true;
+               flag :=true;
+               end   
+          else if ((cadena = '(') and ( not caso) ) then
+               begin
+               palabraAux :='(';
+               caso := false;
+               flag :=true;
+               end 
+          else if ((cadena = ')') and (caso) ) then
+               begin
+               palabraAux :=' of';
+               caso := true;
+               flag :=true;
+               end 
+          else if ((cadena = ')') and ( not caso) ) then
+               begin
+               palabraAux :=')';
+               caso := true;
+               flag :=true;
+               end                                          
           else
                flag :=false;          
                               
@@ -291,6 +351,8 @@ program PROYECTO1;
         End;
 
 begin
+     caso := false;
+     casoLLaves := 0;
      menu;
      clrscr;
      INICIALIZAR(L_PALABRA);
