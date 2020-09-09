@@ -4,7 +4,7 @@ program PROYECTO1;
      VAR L_PALABRA :TIPO_LISTA;
      L_Cab :TIPO_LISTA;
      PALABRA :STRING[100];
-     caso,comentario,isMetodo :boolean;
+     caso,comentario,isMetodo,isVariableB :boolean;
      metodo,metodoDevolver,nombreaux,palabraVariable :string;
      nombrePrograma,beginCount,casoLLaves,isVariable: integer;
 
@@ -104,7 +104,7 @@ program PROYECTO1;
                end  
           else if (cadena = 'SISTEMA.ESPERAR();') then
                begin
-               palabraAux :='repeat until key pressed;';
+               palabraAux :='repeat until keypressed;';
                flag :=true;
                end   
           else if (cadena = 'SISTEMA.LIMPIAR();') then
@@ -139,6 +139,7 @@ program PROYECTO1;
                end
           else if ((cadena = '{') and (caso) and (casoLLaves = 0) ) then
                begin
+               {si estamos dentro de un caso, y es la primer llave que nos encontramos}
                palabraAux :='';
                casoLLaves := casoLLaves + 1;
                caso := true;
@@ -146,6 +147,7 @@ program PROYECTO1;
                end    
           else if ((cadena = '{') and (caso) and (casoLLaves = 1) ) then
                begin
+               {si estamos dentro de un caso, pero en este caso son los begin dentrod de los casos}
                palabraAux :='BEGIN';
                casoLLaves := casoLLaves + 1;
                caso := true;
@@ -153,6 +155,8 @@ program PROYECTO1;
                end  
           else if ((cadena = '}') and (caso) and (casoLLaves = 2) ) then
                begin
+               {si estamos dentro de un caso, y es la primer llave final que nos encontramos}
+               {son las que cierran dentro de los casos}
                palabraAux :='END;';
                casoLLaves := casoLLaves - 1;
                caso := true;
@@ -160,8 +164,8 @@ program PROYECTO1;
                end 
           else if ((cadena = '}') and (caso) and (casoLLaves = 1) ) then
                begin
-               palabraAux :='';
-               
+               {llave final del case}
+               palabraAux :='END;';
                casoLLaves := casoLLaves - 1;
                caso := false;
                flag :=true;
@@ -224,6 +228,7 @@ program PROYECTO1;
           else if (cadena = 'DECLARACION') then
                begin
                palabraAux :='var';
+               isVariableB := true;
                flag :=true;
                end     
           else if (cadena = 'CASO') then
@@ -286,7 +291,10 @@ program PROYECTO1;
                begin
                     nombrePrograma := nombrePrograma + 1;
                     {de esta forma sabemos cuando estamos en la iteración del nombre del programa y agregar un ";" }
-                    isVariable := isVariable + 1;
+                    if(isVariableB) then
+                    begin
+                         isVariable := isVariable + 1;
+                    end;
                     {de esta forma sabemos en que segmento de los 3 en una declaración se encuentra la iteración}
                     if (nombrePrograma = 2) then
                          begin
@@ -294,7 +302,6 @@ program PROYECTO1;
                          end;
                     if (isVariable = 2) then
                          begin
-                              writeln('entramos a caso 2');
                               palabraVariable := palabraAux;
                               palabraAux := '';
                          end;
@@ -309,17 +316,19 @@ program PROYECTO1;
                               metodoDevolver := cadena;
                          end
                     end;
-                    isVariable := isVariable + 1;
+                    if(isVariableB) then
+                    begin
+                         isVariable := isVariable + 1;
+                    end;
                     {de esta forma sabemos en que segmento de los 3 en una declaración se encuentra la iteración}
                     if (isVariable = 3) then
                          begin
-                              writeln('entramos a caso 3');
                               cadena := cadena + ':' + palabraVariable + ';';
                          end;
                     if (isVariable = 4) then
                          begin
-                              writeln('entramos a caso 4');
-                              writeln(cadena, ' cadena');
+                              isVariable := 0;
+                              isVariableB := false;
                               cadena := '';
                          end;
                     traducir:=cadena;    
@@ -470,6 +479,7 @@ begin
      beginCount := 0;
      nombrePrograma := 0;
      isVariable := 0;
+     isVariableB := false;
      metodo:='';
      palabraVariable:='';
      metodoDevolver:='';
