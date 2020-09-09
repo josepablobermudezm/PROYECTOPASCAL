@@ -21,6 +21,7 @@ Procedure Inicializar (Var L :TIPO_LISTA);
 Procedure AGREGAR(VAR L :TIPO_LISTA; ELE :STRING);
 Procedure MostrarLista(Var L :TIPO_LISTA);
 Procedure Validarllaves(VAR L :TIPO_LISTA);
+Procedure EliminarUltimaLLave(VAR L :TIPO_LISTA);
 
 IMPLEMENTATION
 Procedure Inicializar (Var L :TIPO_LISTA);
@@ -108,6 +109,36 @@ procedure MostrarLista(VAR L :TIPO_LISTA);
         BEGIN
             write(auxiliar^.PALABRA);
             auxiliar := auxiliar^.SGTE;
+        END;
+    End;
+
+procedure EliminarUltimaLLave(VAR L :TIPO_LISTA);
+    Var cont, cont2 :integer;
+        auxiliar : TIPO_LISTA;
+    Begin
+        cont := 0;
+        cont2 := 0;
+        auxiliar := L;
+        while auxiliar <> nil do 
+        BEGIN
+            if (auxiliar^.PALABRA = '}') then
+            begin
+                cont := cont + 1;
+            end;
+            auxiliar := auxiliar^.SGTE;
+        END;
+
+        while L <> nil do 
+        BEGIN
+            if (L^.PALABRA = '}') then
+            begin
+                cont2 := cont2 + 1;
+                if(cont2 = cont) then
+                begin
+                    L^.PALABRA := '';
+                end;
+            end;
+            L := L^.SGTE;
         END;
     End;
 END.

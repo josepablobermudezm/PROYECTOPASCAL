@@ -340,6 +340,7 @@ program PROYECTO1;
                begin
                     Assign(Archiv,nombreArc); {Asigna variable "Archiv" a Pueba.txt}
                     ReWrite(Archiv); {Crea el archivo}
+                    EliminarUltimaLLave(ListaLenguaje);
                     aux := ListaLenguaje;
                     while aux <> nil do 
                     begin
