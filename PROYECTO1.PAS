@@ -9,7 +9,9 @@ program PROYECTO1;
      casoLLaves :integer;
      comentario :boolean;
      metodo :string;
+     metodoDevolver :string;
      isMetodo: boolean; 
+     isRetorno: boolean;
 
      VAR ListaLenguaje :TIPO_LISTA;
          ListaAux :TIPO_LISTA;
@@ -207,6 +209,7 @@ program PROYECTO1;
           else if (cadena = '}.METODO') then
                begin
                palabraAux :='END;';
+               isRetorno := false;
                flag :=true;
                end
                
@@ -272,13 +275,19 @@ program PROYECTO1;
                {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
                isMetodo := true;
                palabraAux :='function';
+               isRetorno := true;
                flag :=true;
+               end   
+          else if(cadena = 'DEVOLVER') then
+               begin
+               {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
+               (*palabraAux :='function';*)
+               {isRetorno := true;
+               flag :=true;}
+               writeLn('metodo: ', metodoDevolver);
                end            
           else
                flag :=false;          
-
-          
-                              
           if flag then
                traducir:=palabraAux
           else
@@ -425,8 +434,10 @@ program PROYECTO1;
 begin
      caso := false;
      comentario := false;
+     isRetorno := false;
      casoLLaves := 0;
      metodo:='';
+     metodoDevolver:='';
      menu;
      clrscr;
      INICIALIZAR(L_PALABRA);
