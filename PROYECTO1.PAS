@@ -332,31 +332,30 @@ program PROYECTO1;
      aux :TIPO_LISTA;
      Begin
           clrscr;
-          Validarllaves(ListaAux);
-          if valido then
-               begin
-                    write('FUNCIONA');
-               end
-          else
-               begin
-                    write('NO CUMPLE');
-               end;
-          
           writeln('                     --------Compilando--------');
           nombreArc := nombreaux+'.pas';
           writeln('                     Nombre Del archivo: ' + nombreArc);
-          Assign(Archiv,nombreArc); {Asigna variable "Archiv" a Pueba.txt}
-          ReWrite(Archiv); {Crea el archivo}
-          aux := ListaLenguaje;
-          while aux <> nil do 
-          BEGIN
-               write( Archiv, aux^.PALABRA );
-               aux := aux^.SGTE;
-          END;
-          writeln('                     Archivo Compilado!');
-          close( Archiv );
+          Validarllaves(ListaAux);
+          if valido then
+               begin
+                    Assign(Archiv,nombreArc); {Asigna variable "Archiv" a Pueba.txt}
+                    ReWrite(Archiv); {Crea el archivo}
+                    aux := ListaLenguaje;
+                    while aux <> nil do 
+                    begin
+                         write( Archiv, aux^.PALABRA );
+                         aux := aux^.SGTE;
+                    end;
+                    writeln('                     Archivo Compilado!');
+                    close( Archiv );
+               end
+          else
+               begin
+                    writeln('                     Errores encontrados en apertura y cierre de sentencias');
+               end;
           writeln(' '); 
           writeln('                     Digite una tecla para continuar...'); 
+          
           repeat until keypressed;
      End;
 
