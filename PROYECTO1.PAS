@@ -11,6 +11,8 @@ program PROYECTO1;
      metodo :string;
      metodoDevolver :string;
      isMetodo: boolean; 
+     beginCount: integer; 
+     nombrePrograma: integer;
 
      VAR ListaLenguaje :TIPO_LISTA;
          ListaAux :TIPO_LISTA;
@@ -177,8 +179,12 @@ program PROYECTO1;
                end }                
           else if (cadena = '{') then
                begin
-               palabraAux :='BEGIN';
+               if (beginCount = 0) then
+                    palabraAux := ''
+               else 
+                    palabraAux :='BEGIN';
                flag :=true;
+               beginCount := beginCount + 1;
                end
           else if (cadena = '}') then
                begin
@@ -284,6 +290,11 @@ program PROYECTO1;
                flag :=false;          
           if flag then
                begin
+                    nombrePrograma := nombrePrograma + 1;
+                    if (nombrePrograma = 2) then
+                         begin
+                              palabraAux := palabraAux + ';';
+                         end;
                     traducir:=palabraAux;
                end
           else
@@ -440,6 +451,8 @@ begin
      caso := false;
      comentario := false;
      casoLLaves := 0;
+     beginCount := 0;
+     nombrePrograma := 0;
      metodo:='';
      metodoDevolver:='';
      menu;
