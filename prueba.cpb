@@ -28,9 +28,9 @@ CPB Calculadora {
     }.METODO  
     PROGRAMA { 
         ! Aquí comienza el programa ! 
-        SISTEMA.LIMPIAR(); 
         REPETIR{ 
-            SISTEMA.MOSTRAR ('Digite los números a calcular: ');
+            SISTEMA.LIMPIAR(); 
+            SISTEMA.MOSTRAR ('Digite los numeros a calcular: ');
             SISTEMA.OBTENER (num1);
             SISTEMA.OBTENER (num2);
             SISTEMA.MOSTRAR ('Seleccione una opcion ');
@@ -48,13 +48,13 @@ CPB Calculadora {
                     SISTEMA.MOSTRAR ('El resultado de la resta es: ', SISTEMA.LLAMAR. Restar (num1,num2));
                 } 
                 3: { 
-                    SISTEMA.MOSTRAR ('El resultado de la multiplicación es: ', SISTEMA.LLAMAR. Multiplicar (num1,num2));
+                    SISTEMA.MOSTRAR ('El resultado de la multiplicacion es: ', SISTEMA.LLAMAR. Multiplicar (num1,num2));
                 } 
                 4: { 
-                    SISTEMA.MOSTRAR ('El resultado de la división es: ', SISTEMA.LLAMAR. Dividir (num1,num2));
+                    SISTEMA.MOSTRAR ('El resultado de la division es: ', SISTEMA.LLAMAR. Dividir (num1,num2));
                 } 
             } 
-        }HASTA (variable == 5);
         SISTEMA.ESPERAR(); 
+        }HASTA (variable == 5);
     }; 
- }   
+ } 
