@@ -115,30 +115,38 @@ procedure MostrarLista(VAR L :TIPO_LISTA);
 procedure EliminarUltimaLLave(VAR L :TIPO_LISTA);
     Var cont, cont2 :integer;
         auxiliar : TIPO_LISTA;
+        auxiliar2 : TIPO_LISTA;
+        auxiliar3 : TIPO_LISTA;
     Begin
         cont := 0;
         cont2 := 0;
         auxiliar := L;
+        auxiliar2 := L;
         while auxiliar <> nil do 
         BEGIN
-            if (auxiliar^.PALABRA = '}') then
+            if (auxiliar^.PALABRA = 'END') then
             begin
                 cont := cont + 1;
             end;
             auxiliar := auxiliar^.SGTE;
         END;
 
-        while L <> nil do 
+
+        auxiliar3 := auxiliar2;
+        while auxiliar2 <> nil do 
         BEGIN
-            if (L^.PALABRA = '}') then
+            if (auxiliar2^.PALABRA = 'END') then
             begin
                 cont2 := cont2 + 1;
                 if(cont2 = cont) then
                 begin
-                    L^.PALABRA := '';
+                    auxiliar2^.PALABRA := '';
                 end;
             end;
-            L := L^.SGTE;
+            auxiliar2 := auxiliar2^.SGTE;
         END;
+
+        auxiliar2 := auxiliar3;
+        L := auxiliar2;
     End;
 END.
