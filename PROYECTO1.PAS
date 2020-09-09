@@ -1,18 +1,12 @@
 program PROYECTO1;
      Uses crt,Lista;
      
-     var nombreaux : string;
      VAR L_PALABRA :TIPO_LISTA;
      L_Cab :TIPO_LISTA;
      PALABRA :STRING[100];
-     caso :boolean;
-     casoLLaves :integer;
-     comentario :boolean;
-     metodo :string;
-     metodoDevolver :string;
-     isMetodo: boolean; 
-     beginCount: integer; 
-     nombrePrograma: integer;
+     caso,comentario,isMetodo :boolean;
+     metodo,metodoDevolver,nombreaux,palabraVariable :string;
+     nombrePrograma,beginCount,casoLLaves,isVariable: integer;
 
      VAR ListaLenguaje :TIPO_LISTA;
          ListaAux :TIPO_LISTA;
@@ -291,9 +285,18 @@ program PROYECTO1;
           if flag then
                begin
                     nombrePrograma := nombrePrograma + 1;
+                    {de esta forma sabemos cuando estamos en la iteración del nombre del programa y agregar un ";" }
+                    isVariable := isVariable + 1;
+                    {de esta forma sabemos en que segmento de los 3 en una declaración se encuentra la iteración}
                     if (nombrePrograma = 2) then
                          begin
                               palabraAux := palabraAux + ';';
+                         end;
+                    if (isVariable = 2) then
+                         begin
+                              writeln('entramos a caso 2');
+                              palabraVariable := palabraAux;
+                              palabraAux := '';
                          end;
                     traducir:=palabraAux;
                end
@@ -306,6 +309,19 @@ program PROYECTO1;
                               metodoDevolver := cadena;
                          end
                     end;
+                    isVariable := isVariable + 1;
+                    {de esta forma sabemos en que segmento de los 3 en una declaración se encuentra la iteración}
+                    if (isVariable = 3) then
+                         begin
+                              writeln('entramos a caso 3');
+                              cadena := cadena + ':' + palabraVariable + ';';
+                         end;
+                    if (isVariable = 4) then
+                         begin
+                              writeln('entramos a caso 4');
+                              writeln(cadena, ' cadena');
+                              cadena := '';
+                         end;
                     traducir:=cadena;    
                end;
      end;
@@ -453,7 +469,9 @@ begin
      casoLLaves := 0;
      beginCount := 0;
      nombrePrograma := 0;
+     isVariable := 0;
      metodo:='';
+     palabraVariable:='';
      metodoDevolver:='';
      menu;
      clrscr;
