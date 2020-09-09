@@ -62,6 +62,7 @@ en el lenguaje escrito por el usuario para su posterior traducción a código in
 procedure Validarllaves(VAR L :TIPO_LISTA);
     var auxiliar : TIPO_LISTA;
         llaveA, llaveC :integer;
+        j :integer;
     Begin
         auxiliar := L;
         llaveA := 0;
@@ -69,15 +70,29 @@ procedure Validarllaves(VAR L :TIPO_LISTA);
         valido := false; { valido es una variable global }
         while auxiliar <> nil do 
             BEGIN
-                if(auxiliar^.PALABRA = '{') then
-                    begin
-                        llaveA := llaveA + 1;
-                    end;
-                if (auxiliar^.PALABRA = '}') then
-                    begin
-                        llaveC := llaveC + 1;
-                    end;
-                auxiliar := auxiliar^.SGTE;
+                for j := 1 to Length(auxiliar^.PALABRA) do
+                    if (j = 1) then 
+                        begin
+                            if(auxiliar^.PALABRA[j] = '}') then
+                                begin
+                                    llaveC := llaveC + 1;
+                                end
+                            else
+                                begin
+                                    if (auxiliar^.PALABRA[j] = '{') then
+                                    begin
+                                        llaveA := llaveA + 1;
+                                    end;
+                                end;
+                        end;
+                    if (Length(auxiliar^.PALABRA) > 1) then
+                        begin
+                            if(auxiliar^.PALABRA[Length(auxiliar^.PALABRA)] = '{') then
+                                begin
+                                    llaveA := llaveA + 1;
+                                end;
+                        end;
+            auxiliar := auxiliar^.SGTE;
             END;
         if(((llaveA <> 0) AND (llaveC <> 0)) AND (llaveA = llaveC)) then
             begin
