@@ -6,7 +6,7 @@ program PROYECTO1;
      PALABRA :STRING[100];
      caso, comentario, isMetodo, isVariableB :boolean;
      metodo,metodoDevolver,nombreaux,palabraVariable :string;
-     nombrePrograma,beginCount,casoLLaves,isVariable, contMetodo: integer;
+     nombrePrograma,beginCount,casoLLaves,isVariable,procedimientoN,contMetodo: integer;
 
      VAR ListaLenguaje :TIPO_LISTA;
          ListaAux :TIPO_LISTA;
@@ -223,7 +223,11 @@ program PROYECTO1;
                     palabraAux :='END;';
                     flag :=true;
                end
-               
+          else if (cadena = '}.PROCESO') then
+               begin
+               palabraAux :='END;';
+               flag :=true;
+               end
           else if (cadena = 'PROGRAMA') then
                begin
                     palabraAux :='';
@@ -289,6 +293,14 @@ program PROYECTO1;
                     palabraAux :='function';
                     flag :=true;
                     contMetodo:=contMetodo+1;
+               end  
+          else if(cadena = 'PROCESO') then
+               begin
+               {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
+               palabraAux :='PROCEDURE';
+               procedimientoN := 1;
+               flag :=true;
+
                end   
           else if(cadena = 'DEVOLVER') then
                begin
@@ -319,6 +331,13 @@ program PROYECTO1;
                end
           else
                begin
+                    if (procedimientoN = 1) then
+                    {si es el nombre del procedimiento le agremos un ";"}
+                    begin
+                         cadena := cadena + ';';
+                         procedimientoN := 0;
+                    end;
+                    
                     if (isMetodo) then
                          begin
                               if(cadena[1] <> '(') then
@@ -491,6 +510,7 @@ begin
      nombrePrograma := 0;
      isVariable := 0;
      isVariableB := false;
+     procedimientoN := 0;
      metodo:='';
      palabraVariable:='';
      metodoDevolver:='';
