@@ -1,0 +1,30 @@
+CPB Calculadora { 
+    AGREGAR.SISTEMA; 
+
+    DECLARACION entero num1,num2,resultado,variable ; 
+    METODO entero Sumar (n1,n2: entero )  
+        DECLARACION entero resultado ; 
+    { 
+        resultado = n1+n2;
+        DEVOLVER resultado;
+    }.METODO  
+
+    PROCESO menu 
+    { 
+        REPETIR{ 
+            SISTEMA.LIMPIAR(); 
+            SISTEMA.MOSTRAR ('Digite los numeros a calcular: ');
+            SISTEMA.OBTENER (num1);
+            SISTEMA.OBTENER (num2);
+            SISTEMA.MOSTRAR ('Seleccione una opcion ');
+            SISTEMA.MOSTRAR ('El resultado de la suma es: ', SISTEMA.LLAMAR. Sumar (num1,num2));
+        SISTEMA.ESPERAR(); 
+        }HASTA (variable == 5);
+    }.PROCESO 
+
+
+    PROGRAMA { 
+        ! Aquí comienza el programa ! 
+        SISTEMA.LLAMAR. menu;
+    }; 
+ } 
