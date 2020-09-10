@@ -4,9 +4,9 @@ program PROYECTO1;
      VAR L_PALABRA :TIPO_LISTA;
      L_Cab :TIPO_LISTA;
      PALABRA :STRING[100];
-     caso, comentario, isMetodo, isVariableB :boolean;
+     caso, comentario, isMetodo, isVariableB,procedimientoN :boolean;
      metodo,metodoDevolver,nombreaux,palabraVariable :string;
-     nombrePrograma,beginCount,casoLLaves,isVariable,contProc,contMetodo,contDeclaracion: integer;
+     nombrePrograma,beginCount,casoLLaves,isVariable,contMetodo, contDeclaracion: integer;
 
      VAR ListaLenguaje :TIPO_LISTA;
          ListaAux :TIPO_LISTA;
@@ -15,7 +15,6 @@ program PROYECTO1;
           var palabraAux :string;
           flag :boolean;
           j : integer;
-          
      begin
           
           for j := 1 to Length(cadena) do
@@ -35,7 +34,7 @@ program PROYECTO1;
                               if(contMetodo=3) then
                                    begin
 
-                                   end
+                                   end;
                               palabraAux :='):'+traducir(metodo)+';';
                               flag :=true;
                               metodo:='';
@@ -65,7 +64,8 @@ program PROYECTO1;
                               flag :=true;
                               
                          end
-                    else if (((cadena ='CARACTER') OR (cadena ='CADENA') OR (cadena ='LOGICO')))  then {Para los parametros de la funcion}
+                    else if (((cadena ='CARACTER') OR (cadena ='CADENA') OR (cadena ='LOGICO')))  then 
+                    {Para los parametros de la funcion}
                          begin
                               (*Se guarda en una variable global el tipo de metodo*)
                               isMetodo:=false;
@@ -294,7 +294,7 @@ program PROYECTO1;
                begin
                {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
                palabraAux :='PROCEDURE';
-               contProc := 1;
+               procedimientoN := true;
                flag :=true;
 
                end   
@@ -323,17 +323,20 @@ program PROYECTO1;
                               palabraVariable := palabraAux;
                               palabraAux := '';
                          end;
+                    if (procedimientoN) then
+                    {si es el nombre del procedimiento le agremos un ";"}
+                    begin
+                         if (palabraAux = 'BEGIN') then
+                         {si es el nombre del procedimiento le agremos un ";"}
+                         begin
+                              palabraAux := ';' + palabraAux ;
+                              procedimientoN := false;
+                         end;
+                    end;
                     traducir:=palabraAux;
                end
           else
-               begin
-                    if (contProc = 1) then
-                    {si es el nombre del procedimiento le agremos un ";"}
-                    begin
-                         cadena := cadena + ';';
-                         contProc := 0;
-                    end;
-                    
+               begin                 
                     if (isMetodo) then
                          begin
                               if(cadena[1] <> '(') then
@@ -356,10 +359,10 @@ program PROYECTO1;
                               isVariableB := false;
                               cadena := '';
                          end;
-                    if(contDeclaracion=0 and contMetodo=0 and contProc=0) then 
+                    if((contDeclaracion=0) and (contMetodo=0) and not(procedimientoN)) then 
                          begin 
                          
-                         end
+                         end;
                     traducir:=cadena;    
                end;
      end;
@@ -509,7 +512,7 @@ begin
      nombrePrograma := 0;
      isVariable := 0;
      isVariableB := false;
-     contProc := 0;
+     procedimientoN := false;
      metodo:='';
      palabraVariable:='';
      metodoDevolver:='';
