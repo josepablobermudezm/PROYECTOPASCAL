@@ -4,9 +4,9 @@ program PROYECTO1;
      VAR L_PALABRA :TIPO_LISTA;
      L_Cab :TIPO_LISTA;
      PALABRA :STRING[100];
-     caso,comentario,isMetodo,isVariableB,procedimientoN :boolean;
+     caso, comentario, isMetodo, isVariableB,procedimientoN :boolean;
      metodo,metodoDevolver,nombreaux,palabraVariable :string;
-     nombrePrograma,beginCount,casoLLaves,isVariable: integer;
+     nombrePrograma,beginCount,casoLLaves,isVariable,contMetodo: integer;
 
      VAR ListaLenguaje :TIPO_LISTA;
          ListaAux :TIPO_LISTA;
@@ -31,6 +31,10 @@ program PROYECTO1;
                          begin
                               (*Se llama a traducir para obtener el tipo de metodo que necesita la funcion*)
                               isMetodo:=false;
+                              if(contMetodo=3) then
+                                   begin
+
+                                   end;
                               palabraAux :='):'+traducir(metodo)+';';
                               flag :=true;
                               metodo:='';
@@ -41,6 +45,7 @@ program PROYECTO1;
                               metodo := cadena;
                               palabraAux :='';
                               flag :=true;
+                              contMetodo:=contMetodo+1;
                          end
                     else if (((cadena ='CARACTER') OR (cadena ='CADENA') OR (cadena ='LOGICO')) AND (metodo=' '))  then
                          begin
@@ -48,16 +53,19 @@ program PROYECTO1;
                               metodo := cadena;
                               palabraAux :='';
                               flag :=true;
+                              contMetodo:=contMetodo+1;
                          end 
-                    else if(( (cadena ='ENTERO') OR (cadena ='FLOTANTE'))) then
+                    else if(( (cadena ='ENTERO') OR (cadena ='FLOTANTE'))) then {Para los parametros de la funcion}
                          begin
                               (*Se guarda en una variable global el tipo de metodo*)
                               isMetodo:=false;
                               palabraAux :=traducir(cadena);
                               isMetodo:=true;
                               flag :=true;
+                              
                          end
-                    else if (((cadena ='CARACTER') OR (cadena ='CADENA') OR (cadena ='LOGICO')))  then
+                    else if (((cadena ='CARACTER') OR (cadena ='CADENA') OR (cadena ='LOGICO')))  then 
+                    {Para los parametros de la funcion}
                          begin
                               (*Se guarda en una variable global el tipo de metodo*)
                               isMetodo:=false;
@@ -67,6 +75,7 @@ program PROYECTO1;
                          end      
                     else 
                          begin
+                              contMetodo:=contMetodo+1;
                               flag:=false; 
                          end
                                   
@@ -186,33 +195,33 @@ program PROYECTO1;
                end
           else if (cadena = '}') then
                begin
-               palabraAux :='END';
-               flag :=true;
+                    palabraAux :='END';
+                    flag :=true;
                end  
           else if (cadena = '};') then
                begin
-               palabraAux :='END.';
-               flag :=true;
+                    palabraAux :='END.';
+                    flag :=true;
                end  
           else if (cadena = '==') then
                begin
-               palabraAux :='=';
-               flag :=true;
+                    palabraAux :='=';
+                    flag :=true;
                end            
           else if (cadena = '=') then
                begin
-               palabraAux :=':=';
-               flag :=true;
+                    palabraAux :=':=';
+                    flag :=true;
                end
           else if (cadena = '=') then
                begin
-               palabraAux :=':=';
-               flag :=true;
+                    palabraAux :=':=';
+                    flag :=true;
                end
           else if (cadena = '}.METODO') then
                begin
-               palabraAux :='END;';
-               flag :=true;
+                    palabraAux :='END;';
+                    flag :=true;
                end
           else if (cadena = '}.PROCESO') then
                begin
@@ -221,68 +230,69 @@ program PROYECTO1;
                end
           else if (cadena = 'PROGRAMA') then
                begin
-               palabraAux :='';
-               flag :=true;
+                    palabraAux :='';
+                    flag :=true;
                end  
           else if (cadena = 'AGREGAR.SISTEMA;') then
                begin
-               palabraAux :='Uses crt;';
-               flag :=true;
+                    palabraAux :='Uses crt;';
+                    flag :=true;
                end    
           else if (cadena = 'DECLARACION') then
                begin
-               palabraAux :='var';
-               isVariableB := true;
-               flag :=true;
+                    palabraAux :='var';
+                    isVariableB := true;
+                    flag :=true;
                end     
           else if (cadena = 'CASO') then
                begin
-               palabraAux :='case';
-               caso := true;
-               flag :=true;
+                    palabraAux :='case';
+                    caso := true;
+                    flag :=true;
                end
           else if ((cadena = '(') and (caso) ) then
                begin
-               palabraAux :='';
-               caso := true;
-               flag :=true;
+                    palabraAux :='';
+                    caso := true;
+                    flag :=true;
                end   
           else if ((cadena = '(') and ( not caso) ) then
                begin
-               palabraAux :='(';
-               caso := false;
-               flag :=true;
+                    palabraAux :='(';
+                    caso := false;
+                    flag :=true;     
                end 
           else if ((cadena = ')') and (caso) and NOT (isMetodo)) then
                begin
-               palabraAux :=' of';
-               caso := true;
-               flag :=true;
+                    palabraAux :=' of';
+                    caso := true;
+                    flag :=true;
                end 
           else if ((cadena = ')') and ( not caso) and NOT (isMetodo)) then
                begin
-               palabraAux :=')';
-               caso := true;
-               flag :=true;
+                    palabraAux :=')';
+                    caso := true;
+                    flag :=true;
                end   
           else if ((cadena = '!') and ( comentario) ) then
                begin
-               palabraAux :='}';
-               comentario := false;
-               flag :=true;
+                    palabraAux :='}';
+                    comentario := false;
+                    flag :=true;
                end 
           else if ((cadena = '!')) then
                begin
-               palabraAux :='{';
-               comentario := true;
-               flag :=true;
+                    palabraAux :='{';
+                    comentario := true;
+                    flag :=true;
                end 
           else if(cadena = 'METODO') then
                begin
-               {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
-               isMetodo := true;
-               palabraAux :='function';
-               flag :=true;
+                    {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
+                    isMetodo := true;
+                    palabraAux :='function';
+                    flag :=true;
+                    contMetodo:=contMetodo+1;
                end  
           else if(cadena = 'PROCESO') then
                begin
@@ -290,6 +300,7 @@ program PROYECTO1;
                palabraAux :='PROCEDURE';
                procedimientoN := true;
                flag :=true;
+
                end   
           else if(cadena = 'DEVOLVER') then
                begin
@@ -303,10 +314,10 @@ program PROYECTO1;
                     nombrePrograma := nombrePrograma + 1;
                     {de esta forma sabemos cuando estamos en la iteración del nombre del programa y agregar un ";" }
                     if(isVariableB) then
-                    begin
-                         isVariable := isVariable + 1;
-                    end;
-                    {de esta forma sabemos en que segmento de los 3 en una declaración se encuentra la iteración}
+                         begin
+                              isVariable := isVariable + 1;
+                         end;
+                         {de esta forma sabemos en que segmento de los 3 en una declaración se encuentra la iteración}
                     if (nombrePrograma = 2) then
                          begin
                               palabraAux := palabraAux + ';';
@@ -331,17 +342,17 @@ program PROYECTO1;
           else
                begin                 
                     if (isMetodo) then
-                    begin
-                         if(cadena[1] <> '(') then
                          begin
-                              metodoDevolver := cadena;
-                         end
-                    end;
+                              if(cadena[1] <> '(') then
+                                   begin
+                                        metodoDevolver := cadena;
+                                   end 
+                         end;
                     if(isVariableB) then
-                    begin
-                         isVariable := isVariable + 1;
-                    end;
-                    {de esta forma sabemos en que segmento de los 3 en una declaración se encuentra la iteración}
+                         begin
+                              isVariable := isVariable + 1;
+                         end;
+                         {de esta forma sabemos en que segmento de los 3 en una declaración se encuentra la iteración}
                     if (isVariable = 3) then
                          begin
                               cadena := cadena + ':' + palabraVariable + ';';
@@ -352,6 +363,7 @@ program PROYECTO1;
                               isVariableB := false;
                               cadena := '';
                          end;
+
                     traducir:=cadena;    
                end;
      end;
