@@ -4,9 +4,9 @@ program PROYECTO1;
      VAR L_PALABRA :TIPO_LISTA;
      L_Cab :TIPO_LISTA;
      PALABRA :STRING[100];
-     caso, comentario, isMetodo, isVariableB,procedimientoN :boolean;
+     caso, comentario, isMetodo, isVariableB,procedimientoN, reservada :boolean;
      metodo,metodoDevolver,nombreaux,palabraVariable :string;
-     nombrePrograma,beginCount,casoLLaves,isVariable,contMetodo, contDeclaracion: integer;
+     nombrePrograma,beginCount,casoLLaves,isVariable,contMetodo, contDeclaracion, contArhivo: integer;
 
      VAR ListaLenguaje :TIPO_LISTA;
          ListaAux :TIPO_LISTA;
@@ -15,6 +15,7 @@ program PROYECTO1;
           var palabraAux :string;
           flag :boolean;
           j : integer;
+
      begin
           
           for j := 1 to Length(cadena) do
@@ -25,19 +26,19 @@ program PROYECTO1;
                palabraAux :='program';
                flag :=true;
                end
+             
           else if(isMetodo) then 
                begin
+                    
                     if (cadena = ')') then
                          begin
                               (*Se llama a traducir para obtener el tipo de metodo que necesita la funcion*)
                               isMetodo:=false;
-                              if(contMetodo=3) then
-                                   begin
-
-                                   end;
+                              
                               palabraAux :='):'+traducir(metodo)+';';
                               flag :=true;
                               metodo:='';
+                              contMetodo:=0;
                          end
                     else if(( (cadena ='ENTERO') OR (cadena ='FLOTANTE')) AND (metodo='')) then
                          begin
@@ -357,12 +358,18 @@ program PROYECTO1;
                          begin
                               isVariable := 0;
                               isVariableB := false;
+                              palabraVariable:='';
                               cadena := '';
                          end;
-                    if((contDeclaracion=0) and (contMetodo=0) and not(procedimientoN)) then 
+                    if(palabraVariable <> '') then
+                         begin
+                         writeln('NOMBRE ',palabraVariable);
+                         end;     
+                    
+                    {if((contDeclaracion=0) and (contMetodo=0) and not(procedimientoN)) then 
                          begin 
-                         
-                         end;
+                              writeLn('ERROR EN SINTAXIS');
+                         end;}
                     traducir:=cadena;    
                end;
      end;
@@ -377,6 +384,7 @@ program PROYECTO1;
           nombreArc := nombreaux+'.pas';
           writeln('                     Nombre Del archivo: ' + nombreArc);
           Validarllaves(ListaAux);
+          verificarFinal(ListaAux);
           if valido then
                begin
                     Assign(Archiv,nombreArc); {Asigna variable "Archiv" a Pueba.txt}
@@ -385,6 +393,7 @@ program PROYECTO1;
                     aux := ListaLenguaje;
                     while aux <> nil do 
                     begin
+                         
                          write( Archiv, aux^.PALABRA );
                          aux := aux^.SGTE;
                     end;
@@ -418,6 +427,7 @@ program PROYECTO1;
 
      Procedure Cargar;
      var f: text;       (* Un fichero de texto *) 
+     var errorT : text;
      Var nombreArchivo:string[30];
      caracter : char;
      var palabra :string;
@@ -451,14 +461,22 @@ program PROYECTO1;
                          begin
                               palabra := palabra + caracter;
                          end
-                    else if (ord(caracter ) =10 ) then
+                    else if (ord(caracter ) = 10 ) then
                          begin
                               espacio :=' ';
                               AGREGAR (ListaLenguaje, espacio);
                          end
                     else
                          begin   
+                              contArhivo:=contArhivo+1;     
                               espacio :=' '; 
+                              if((contArhivo=1) and ((palabra <>'cpb') or (palabra <>'CPB')) )then
+                                   begin 
+                                        assign( errorT, 'ERRORS.TXT' );  
+                                        rewrite( errorT );              
+                                        writeLn( errorT, 'Error de sintaxis en linea 1:  ', palabra);      
+                                        close( errorT );                
+                                   end     
                               parametro := traducir(palabra);
                               AGREGAR(ListaAux, palabra);
                               AGREGAR(ListaAux, espacio);
@@ -516,6 +534,7 @@ begin
      metodo:='';
      palabraVariable:='';
      metodoDevolver:='';
+     contArhivo:=0;
      menu;
      clrscr;
      INICIALIZAR(L_PALABRA);

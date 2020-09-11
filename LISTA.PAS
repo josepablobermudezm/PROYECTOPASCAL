@@ -22,6 +22,7 @@ Procedure AGREGAR(VAR L :TIPO_LISTA; ELE :STRING);
 Procedure MostrarLista(Var L :TIPO_LISTA);
 Procedure Validarllaves(VAR L :TIPO_LISTA);
 Procedure EliminarUltimaLLave(VAR L :TIPO_LISTA);
+Procedure verificarFinal(VAR L :TIPO_LISTA);
 
 IMPLEMENTATION
 Procedure Inicializar (Var L :TIPO_LISTA);
@@ -100,6 +101,29 @@ procedure Validarllaves(VAR L :TIPO_LISTA);
                 valido := true;
             end;
     End;
+
+procedure verificarFinal(VAR L :TIPO_LISTA);
+    var auxiliar, aux2 : TIPO_LISTA;
+    cont, cont2: integer;
+    errorT : text; 
+        Begin
+            auxiliar := L;
+        
+
+            while auxiliar <> nil do 
+                BEGIN
+                    cont2:= cont2+1;
+                    if( (auxiliar^.PALABRA <> '};') and (auxiliar^.SGTE=nil) ) then
+                        begin
+                            assign( errorT, 'ERRORS.TXT' );  
+                            rewrite( errorT );              
+                            writeLn( errorT, 'Error de sintaxis en linea final:  };');      
+                            close( errorT );  
+                        end;
+                        
+                    auxiliar := auxiliar^.SGTE;
+                END;
+        End;
 
 procedure MostrarLista(VAR L :TIPO_LISTA);
     var auxiliar : TIPO_LISTA;
