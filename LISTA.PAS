@@ -21,7 +21,7 @@ Procedure Inicializar (Var L :TIPO_LISTA);
 Procedure AGREGAR(VAR L :TIPO_LISTA; ELE :STRING);
 Procedure MostrarLista(Var L :TIPO_LISTA);
 Procedure Validarllaves(VAR L :TIPO_LISTA);
-Procedure EliminarUltimaLLave(VAR L :TIPO_LISTA);
+procedure EliminarUltimaLLave(VAR L :TIPO_LISTA; Var tipoP :string);
 Procedure VerificarFinal(VAR L :TIPO_LISTA);
 
 IMPLEMENTATION
@@ -106,23 +106,54 @@ procedure VerificarFinal(VAR L :TIPO_LISTA);
     var auxiliar, aux2 : TIPO_LISTA;
     cont, cont2: integer;
     errorT : text; 
+    fichero,fichero2: text;       (* Un fichero de texto *) 
+    linea,linea2: string;      (* La linea que leeremos *)
         Begin
-            auxiliar := L;
-        
-
+            {auxiliar := L;
             while auxiliar <> nil do 
                 BEGIN
                     cont2:= cont2+1;
-                    if( (auxiliar^.PALABRA <> '};') and (auxiliar^.SGTE=nil) ) then
+                    if( (auxiliar^.PALABRA <> ';') and (auxiliar^.SGTE=nil) ) then
                         begin
                             assign( errorT, 'ERRORS.TXT' );  
-                            rewrite( errorT );              
-                            writeLn( errorT, 'Error de sintaxis en linea final:  };');      
+                            append( errorT );
+                            writeLn( errorT, 'Error de sintaxis en linea final:  ;');      
                             close( errorT );  
+                            writeLn(auxiliar^.PALABRA, ' palabra');      
                         end;
                         
                     auxiliar := auxiliar^.SGTE;
-                END;
+                END;}
+
+
+                {assign( fichero, 'prueba.cpb' );  (* Le asignamos nombre *) 
+                reset( fichero );                (* Lo abrimos para leer datos *) 
+                while not eof( fichero) do
+                begin
+                    cont := cont + 1;
+                    readLn( fichero, linea );    (* Leemos una linea *)
+                end;
+                close( fichero );                (* Finalmente cerramos *) 
+
+
+
+
+                assign( fichero2, 'prueba.cpb' );  (* Le asignamos nombre *) 
+                reset( fichero2 );                (* Lo abrimos para leer datos *) 
+                while not eof( fichero2) do
+                begin
+                    cont2 := cont2 + 1;
+                    if(cont2 = cont-1 ) then
+                    begin
+                        readLn( fichero2, linea2 );    (* Leemos una linea *)
+                        if(linea2 = '    ; ') then
+                        begin
+                            writeln(linea2, 'esta es mi linea');
+                        end;
+                    end;
+                   
+                end;
+                close( fichero2 );  }
         End;
 
 procedure MostrarLista(VAR L :TIPO_LISTA);
@@ -136,7 +167,7 @@ procedure MostrarLista(VAR L :TIPO_LISTA);
         END;
     End;
 
-procedure EliminarUltimaLLave(VAR L :TIPO_LISTA);
+procedure EliminarUltimaLLave(VAR L :TIPO_LISTA; Var tipoP :string);
     Var cont, cont2 :integer;
         auxiliar : TIPO_LISTA;
         auxiliar2 : TIPO_LISTA;
@@ -148,7 +179,7 @@ procedure EliminarUltimaLLave(VAR L :TIPO_LISTA);
         auxiliar2 := L;
         while auxiliar <> nil do 
         BEGIN
-            if (auxiliar^.PALABRA = 'END') then
+            if (auxiliar^.PALABRA = tipoP) then
             begin
                 cont := cont + 1;
             end;
@@ -159,17 +190,18 @@ procedure EliminarUltimaLLave(VAR L :TIPO_LISTA);
         auxiliar3 := auxiliar2;
         while auxiliar2 <> nil do 
         BEGIN
-            if (auxiliar2^.PALABRA = 'END') then
+            if (auxiliar2^.PALABRA = tipoP) then
             begin
                 cont2 := cont2 + 1;
                 if(cont2 = cont) then
                 begin
                     auxiliar2^.PALABRA := '';
+                    {auxiliar2^.PALABRA := '';
+                    auxiliar2^.PALABRA := '';}
                 end;
             end;
             auxiliar2 := auxiliar2^.SGTE;
         END;
-
         auxiliar2 := auxiliar3;
         L := auxiliar2;
     End;

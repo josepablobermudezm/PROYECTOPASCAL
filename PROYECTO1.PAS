@@ -17,10 +17,6 @@ program PROYECTO1;
           j : integer;
 
      begin
-          
-          for j := 1 to Length(cadena) do
-          cadena[j] := UpCase(cadena[j]);
-          
           if(cadena = 'CPB') then
                begin
                palabraAux :='program';
@@ -33,7 +29,7 @@ program PROYECTO1;
                     if (cadena = ')') then
                          begin
                               (*Se llama a traducir para obtener el tipo de metodo que necesita la funcion*)
-                              isMetodo:=false;
+                              isMetodo:=false;{terminamos el metodo}
                               
                               palabraAux :='):'+traducir(metodo)+';';
                               flag :=true;
@@ -365,7 +361,7 @@ program PROYECTO1;
                          begin
                               if(cadena[1] <> '(') then
                                    begin
-                                        metodoDevolver := cadena;
+                                        metodoDevolver := cadena;{nombre del método}
                                    end 
                          end;
                     if(isVariableB) then
@@ -386,37 +382,40 @@ program PROYECTO1;
                          end;
                     if(palabraVariable <> '') then
                          begin
-                         writeln('NOMBRE ',palabraVariable);
                          end;     
                     
                     {if((contDeclaracion=0) and (contMetodo=0) and not(procedimientoN)) then 
                          begin 
                               writeLn('ERROR EN SINTAXIS');
                          end;}
-                    traducir:=cadena;    
+                    traducir:=cadena;
+                    metodoDevolver := '';    
                end;
      end;
 
      procedure Compilar;
      var Archiv : text;
-     var nombreArc : string;
+     var nombreArc,palabraP : string;
      aux :TIPO_LISTA;
+
      Begin
           clrscr;
           writeln('                     --------Compilando--------');
           nombreArc := nombreaux+'.pas';
           writeln('                     Nombre Del archivo: ' + nombreArc);
-          Validarllaves(ListaAux);
-          VerificarFinal(ListaAux);
+          Validarllaves(ListaAux);{validamos que todas las llaves abran y cierren}
+          palabraP := '}';
+          EliminarUltimaLLave(ListaAux, palabraP);{eliminamos la última llave}
+          VerificarFinal(ListaAux);{verificamos que la última llave sea "llave final y ;"}
           if valido then
                begin
                     Assign(Archiv,nombreArc); {Asigna variable "Archiv" a Pueba.txt}
                     ReWrite(Archiv); {Crea el archivo}
-                    EliminarUltimaLLave(ListaLenguaje);
+                    palabraP := 'END';
+                    EliminarUltimaLLave(ListaLenguaje, palabraP);
                     aux := ListaLenguaje;
                     while aux <> nil do 
                     begin
-                         
                          write( Archiv, aux^.PALABRA );
                          aux := aux^.SGTE;
                     end;
@@ -449,14 +448,18 @@ program PROYECTO1;
      end;
 
      Procedure Cargar;
-     var f: text;       (* Un fichero de texto *) 
-     var errorT : text;
-     Var nombreArchivo:string[30];
+     var f,errorT: text;       (* Un fichero de texto *) 
+     nombreArchivo:string[30];
      caracter : char;
-     var palabra :string;
-     var parametro: string;
-     var espacio :string;
+     parametro,espacio,palabra: string;
+     j : integer;
      Begin
+          {Creamos el archivo de errores, y le escribimos un título}
+          assign( errorT, 'ERRORS.TXT' );  
+          rewrite( errorT );              
+          writeLn( errorT, 'Lista de errores');      
+          close( errorT ); 
+
           clrscr;
           writeln('                     --------Cargando Archivo--------');
           write('                     Digite el nombre del archivo: ');
@@ -493,10 +496,14 @@ program PROYECTO1;
                          begin   
                               contArhivo:=contArhivo+1;     
                               espacio :=' '; 
-                              if((contArhivo=1) and ((palabra <>'cpb') or (palabra <>'CPB')) )then
+                              for j := 1 to Length(palabra) do
+                                   palabra[j] := UpCase(palabra[j]);
+
+                              if((contArhivo=1) and (palabra <> 'CPB') )then
                                    begin 
+                                        writeln('Hay un error en cpb');
                                         assign( errorT, 'ERRORS.TXT' );  
-                                        rewrite( errorT );              
+                                        append( errorT );            
                                         writeLn( errorT, 'Error de sintaxis en linea 1:  ', palabra);      
                                         close( errorT );                
                                    end;     
