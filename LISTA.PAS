@@ -22,7 +22,7 @@ Procedure AGREGAR(VAR L :TIPO_LISTA; ELE :STRING);
 Procedure MostrarLista(Var L :TIPO_LISTA);
 Procedure Validarllaves(VAR L :TIPO_LISTA);
 Procedure EliminarUltimaLLave(VAR L :TIPO_LISTA);
-Procedure verificarFinal(VAR L :TIPO_LISTA);
+Procedure VerificarFinal(VAR L :TIPO_LISTA);
 
 IMPLEMENTATION
 Procedure Inicializar (Var L :TIPO_LISTA);
@@ -102,7 +102,7 @@ procedure Validarllaves(VAR L :TIPO_LISTA);
             end;
     End;
 
-procedure verificarFinal(VAR L :TIPO_LISTA);
+procedure VerificarFinal(VAR L :TIPO_LISTA);
     var auxiliar, aux2 : TIPO_LISTA;
     cont, cont2: integer;
     errorT : text; 

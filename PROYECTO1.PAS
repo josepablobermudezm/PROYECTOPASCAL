@@ -407,7 +407,7 @@ program PROYECTO1;
           nombreArc := nombreaux+'.pas';
           writeln('                     Nombre Del archivo: ' + nombreArc);
           Validarllaves(ListaAux);
-          verificarFinal(ListaAux);
+          VerificarFinal(ListaAux);
           if valido then
                begin
                     Assign(Archiv,nombreArc); {Asigna variable "Archiv" a Pueba.txt}
@@ -499,7 +499,7 @@ program PROYECTO1;
                                         rewrite( errorT );              
                                         writeLn( errorT, 'Error de sintaxis en linea 1:  ', palabra);      
                                         close( errorT );                
-                                   end     
+                                   end;     
                               parametro := traducir(palabra);
                               AGREGAR(ListaAux, palabra);
                               AGREGAR(ListaAux, espacio);
