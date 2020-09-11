@@ -4,10 +4,10 @@ program PROYECTO1;
      VAR L_PALABRA :TIPO_LISTA;
      L_Cab :TIPO_LISTA;
      PALABRA :STRING[100];
-     caso, comentario, isMetodo, isVariableB,procedimientoN, reservada :boolean;
+     caso, comentario, isMetodo, isVariableB,procedimientoN  :boolean;
      metodo,metodoDevolver,nombreaux,palabraVariable :string;
      nombrePrograma,beginCount,casoLLaves,isVariable,contMetodo, contDeclaracion, contArhivo: integer;
-
+     reservada, metAux1, procAux1, agreAux1 , progAux1 : integer;
      VAR ListaLenguaje :TIPO_LISTA;
          ListaAux :TIPO_LISTA;
 
@@ -15,8 +15,32 @@ program PROYECTO1;
           var palabraAux :string;
           flag :boolean;
           j : integer;
+          errorT:text;
 
      begin
+          if((metAux1=2) and (cadena<>'') and (cadena<>' ') and ((cadena[1]='M') or (cadena[1]='P') ) ) then
+               begin
+                    metAux1:=0;
+                    if((cadena<>'METODO') and (cadena<>'PROCESO') and (cadena<>'PROGRAMA'))  then
+                         begin 
+                              assign( errorT, 'ERRORS.TXT' );  
+                              append( errorT );
+                              writeLn( errorT, 'La palabra reservada: ', cadena,' no existe');      
+                              close( errorT ); 
+                         end;
+               end;
+          if((procAux1=2) and (cadena<>'') and (cadena<>' ')  and (  (cadena[1]='M') or (cadena[1]='P') ) ) then
+               begin
+                    procAux1:=0;
+                    if((cadena<>'METODO') and (cadena<>'PROCESO') and (cadena<>'PROGRAMA'))  then
+                         begin 
+                              assign( errorT, 'ERRORS.TXT' );  
+                              append( errorT );
+                              writeLn( errorT, 'La palabra reservada: ', cadena,' no existe');      
+                              close( errorT ); 
+                         end;
+                    
+               end;     
           if(cadena = 'CPB') then
                begin
                palabraAux :='program';
@@ -212,11 +236,13 @@ program PROYECTO1;
                end
           else if (cadena = '}.METODO') then
                begin
+                    metAux1:= 2;
                     palabraAux :='END;';
                     flag :=true;
                end
           else if (cadena = '}.PROCESO') then
                begin
+               procAux1:= 2;
                palabraAux :='END;';
                flag :=true;
                end
@@ -232,6 +258,7 @@ program PROYECTO1;
                end    
           else if (cadena = 'DECLARACION') then
                begin
+
                     palabraAux :='var';
                     isVariableB := true;
                     flag :=true;
@@ -283,6 +310,7 @@ program PROYECTO1;
                begin
                     {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
                     isMetodo := true;
+                    metAux1:= 1;
                     palabraAux :='function';
                     flag :=true;
                     contMetodo:=contMetodo+1;
@@ -292,6 +320,7 @@ program PROYECTO1;
                {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
                palabraAux :='PROCEDURE';
                procedimientoN := true;
+               procAux1:=1;
                flag :=true;
                end   
           else if(cadena = 'PARA') then
@@ -405,8 +434,8 @@ program PROYECTO1;
           writeln('                     Nombre Del archivo: ' + nombreArc);
           Validarllaves(ListaAux);{validamos que todas las llaves abran y cierren}
           palabraP := '}';
-          EliminarUltimaLLave(ListaAux, palabraP);{eliminamos la última llave}
-          VerificarFinal(ListaAux);{verificamos que la última llave sea "llave final y ;"}
+          EliminarUltimaLLave(ListaAux, palabraP);{eliminamos la última llave
+          {VerificarFinal(ListaAux);{verificamos que la última llave sea "llave final y ;"}
           if valido then
                begin
                     Assign(Archiv,nombreArc); {Asigna variable "Archiv" a Pueba.txt}
@@ -521,6 +550,17 @@ program PROYECTO1;
           writeln('                     Archivo Cargado!'); 
           writeln(' '); 
           writeln('                     Digite una tecla para continuar...'); 
+          if((metAux1<>0) or (procAux1<>0)) then {ARREGLAR LUEGO XD}
+               begin 
+                    assign( errorT, 'ERRORS.TXT' );  
+                    append( errorT );
+                    writeLn( errorT, 'Estructuras de metodo o procedimiento no fueron cerradas');      
+                    close( errorT );
+               end
+          else
+               begin
+                    writeLn('Ejecutado con exito'); 
+               end;     
           repeat until keypressed;
      End;
 
