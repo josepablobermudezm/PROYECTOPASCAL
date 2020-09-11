@@ -1,0 +1,18 @@
+CPB Calculadora { 
+    AGREGAR.SISTEMA; 
+
+    DECLARACION entero x,y ; 
+
+    PROGRAMA { 
+        ! Aquí comienza el programa ! 
+        clrscr; 
+        PARA x = 1 HASTA 5 FINAL 
+        { 
+            PARA y = 1 HASTA 5 FINAL 
+            { 
+                SISTEMA.MOSTRAR (x,' ',y,' ', ' - '); 
+            }.PARA 
+        }.PARA 
+        SISTEMA.ESPERAR(); 
+    }; 
+ } 

@@ -297,8 +297,31 @@ program PROYECTO1;
                palabraAux :='PROCEDURE';
                procedimientoN := true;
                flag :=true;
-
                end   
+          else if(cadena = 'PARA') then
+               begin
+               {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
+               palabraAux :='FOR';
+               flag :=true;
+               end  
+          else if(cadena = 'HASTA') then
+               begin
+               {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
+               palabraAux :='TO';
+               flag :=true;
+               end 
+          else if(cadena = 'FINAL') then
+               begin
+               {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
+               palabraAux :='DO';
+               flag :=true;
+               end 
+          else if(cadena = '}.PARA') then
+               begin
+               {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
+               palabraAux :='END;';
+               flag :=true;
+               end 
           else if(cadena = 'DEVOLVER') then
                begin
                     palabraAux := metodoDevolver + ':=';
