@@ -281,7 +281,7 @@ program PROYECTO1;
                     palabraAux :='END;';
                     isInicio := false;
                     isMetodoB:=false;
-                    isProcesoB:=false;
+                    writeln('Terminando metodo');
                     flag :=true;
                end
           else if (cadena = '}.PROCESO') then
@@ -290,7 +290,7 @@ program PROYECTO1;
                palabraAux :='END;';
                isInicio := false;
                flag :=true;
-               isMetodoB:=false;
+               writeln('terminando proceso');
                isProcesoB:=false;
                end
           else if (cadena = 'PROGRAMA') then
@@ -360,8 +360,8 @@ program PROYECTO1;
                     metAux1:= 1;
                     palabraAux :='function';
                     flag :=true;
+                    writeln('empezando metodo');
                     isMetodoB:=true;
-                    isProcesoB:=false;
                     contMetodo:=contMetodo+1;
                end  
           else if(cadena = 'PROCESO') then
@@ -369,6 +369,7 @@ program PROYECTO1;
                {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
                palabraAux :='PROCEDURE';
                isProceso := true;
+               writeln('empezando proceso');
                isProcesoB:=true;
                isMetodoB:=false;
                procAux1:=1;
