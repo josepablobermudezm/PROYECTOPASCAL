@@ -31,6 +31,9 @@ program PROYECTO1;
                               isDeclaraB:=false;
                               {isProcesoB:=false;
                               isMetodoB:=false;}
+                              writeln('Errores encontrados en la palabra reservada ', cadena);
+                              repeat until keypressed;
+                              HALT;
                          end;
                end;
           if((metAux1=2) and (cadena<>'') and (cadena<>' ') 
