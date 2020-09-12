@@ -43,6 +43,16 @@ program PROYECTO1;
                               close( errorT ); 
                          end;
                     
+               end;
+           {una declaración de variables no puede estar dentro de un begin}
+          if ((isInicio) and (cadena = 'DECLARACION')) then
+               begin
+                    isInicio :=false;
+                    assign( errorT, 'ERRORS.TXT' );  
+                    append( errorT );
+                    writeLn( errorT, 'La palabra reservada: ', cadena,
+                    ', se encuentra en un lugar incorrecto');      
+                    close( errorT ); 
                end;  
           if(cadena = 'CPB') then
                begin
@@ -410,6 +420,7 @@ program PROYECTO1;
                     if (nombrePrograma = 2) then
                          begin
                               palabraAux := palabraAux + ';';
+                              isInicio :=false;
                          end;
                     if (isVariable = 2) then
                          begin
@@ -644,6 +655,7 @@ begin
      nombrePrograma := 0;
      isVariable := 0;
      isVariableB := false;
+     isInicio :=false;
      procedimientoN := false;
      metodo:='';
      palabraVariable:='';
