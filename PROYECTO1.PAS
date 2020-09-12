@@ -366,6 +366,25 @@ program PROYECTO1;
                condicionalB := true;
                flag :=true;
                end 
+           else if(cadena = 'SINO') then
+               begin
+               {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
+               palabraAux :='ELSE';
+               condicionalB := false;
+               flag :=true;
+               end 
+          else if(cadena = 'OO') then
+               begin
+               {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
+               palabraAux :='OR';
+               flag :=true;
+               end 
+          else if(cadena = 'YY') then
+               begin
+               {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
+               palabraAux :='AND';
+               flag :=true;
+               end 
           else if(cadena = 'DEVOLVER') then
                begin
                     palabraAux := metodoDevolver + ':=';

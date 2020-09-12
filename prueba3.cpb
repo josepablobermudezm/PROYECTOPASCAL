@@ -13,6 +13,9 @@ CPB Calculadora {
                 SI (x == y) { 
                     SISTEMA.MOSTRAR (x,' ',y,' ', ' - '); 
                 } 
+                SINO { 
+                    SISTEMA.MOSTRAR (' '); 
+                } 
             }.PARA 
         }.PARA 
         SISTEMA.ESPERAR(); 
