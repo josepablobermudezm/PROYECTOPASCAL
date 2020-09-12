@@ -2,6 +2,7 @@ CPB Calculadora {
     AGREGAR.SISTEMA; 
 
     DECLARACION entero x,y ; 
+
     PROGRAMA { 
         ! Aquí comienza el programa ! 
         clrscr; 
@@ -11,7 +12,7 @@ CPB Calculadora {
             { 
                 SI (x == y) { 
                     SISTEMA.MOSTRAR (x,' ',y,' ', ' - '); 
-                }.SI  
+                } 
             }.PARA 
         }.PARA 
         SISTEMA.ESPERAR(); 
