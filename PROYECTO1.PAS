@@ -4,7 +4,7 @@ program PROYECTO1;
      VAR L_PALABRA :TIPO_LISTA;
      L_Cab :TIPO_LISTA;
      PALABRA :STRING[100];
-     caso, comentario, isMetodo, isVariableB,procedimientoN,condicionalB,isProceso,isInicio  :boolean;
+     caso, comentario, isMetodo, isVariableB,isProceso,condicionalB,isInicio, isDeclaraB, isProcesoB, isMetodoB :boolean;
      metodo,metodoDevolver,nombreaux,palabraVariable :string;
      nombrePrograma,beginCount,casoLLaves,isVariable,contMetodo, contDeclaracion, contArhivo: integer;
      reservada, metAux1, procAux1, agreAux1 , progAux1 : integer;
@@ -13,14 +13,28 @@ program PROYECTO1;
 
      function traducir(cadena :string) : string;
           var palabraAux :string;
-          flag :boolean;
+          flag :boolean; 
           j : integer;
           errorT:text;
 
      begin
+
+          if((isDeclaraB) and not(isMetodoB) and not(isProcesoB) and (cadena<>'') and (cadena<>' ') 
+          and (Ord(cadena[1]) > 32) and(cadena<>';') ) then
+               begin
+                    if((cadena<>'METODO') and (cadena<>'PROCESO') and (cadena<>'PROGRAMA') and (cadena<>'DECLARACION'))  then
+                         begin 
+                              assign( errorT, 'ERRORS.TXT' );  
+                              append( errorT );
+                              writeLn( errorT, 'La palabra reservada: ', cadena,' no existe');      
+                              close( errorT ); 
+                              isDeclaraB:=false;
+                              {isProcesoB:=false;
+                              isMetodoB:=false;}
+                         end;
+               end;
           if((metAux1=2) and (cadena<>'') and (cadena<>' ') 
-          and (Ord(cadena[1]) > 32)
-          ) then
+          and (Ord(cadena[1]) > 32)) then
                begin
                     metAux1:=0;
                     if((cadena<>'METODO') and (cadena<>'PROCESO') and (cadena<>'PROGRAMA'))  then
@@ -29,6 +43,7 @@ program PROYECTO1;
                               append( errorT );
                               writeLn( errorT, 'La palabra reservada: ', cadena,' no existe');      
                               close( errorT ); 
+                              
                          end;
                end;
           if((procAux1=2) and (cadena<>'') and (cadena<>' ')  
@@ -265,6 +280,8 @@ program PROYECTO1;
                     metAux1:= 2;
                     palabraAux :='END;';
                     isInicio := false;
+                    isMetodoB:=false;
+                    isProcesoB:=false;
                     flag :=true;
                end
           else if (cadena = '}.PROCESO') then
@@ -273,6 +290,8 @@ program PROYECTO1;
                palabraAux :='END;';
                isInicio := false;
                flag :=true;
+               isMetodoB:=false;
+               isProcesoB:=false;
                end
           else if (cadena = 'PROGRAMA') then
                begin
@@ -310,13 +329,13 @@ program PROYECTO1;
                     caso := false;
                     flag :=true;     
                end 
-          else if ((cadena = ')') and (caso) and NOT (isMetodo) and NOT (procedimientoN)) then
+          else if ((cadena = ')') and (caso) and NOT (isMetodo) and NOT (isProceso)) then
                begin
                     palabraAux :=' of';
                     caso := true;
                     flag :=true;
                end 
-          else if ((cadena = ')') and ( not caso) and NOT (isMetodo) and NOT (procedimientoN)) then
+          else if ((cadena = ')') and ( not caso) and NOT (isMetodo) and NOT (isProceso)) then
                begin
                     palabraAux :=')';
                     caso := true;
@@ -341,13 +360,17 @@ program PROYECTO1;
                     metAux1:= 1;
                     palabraAux :='function';
                     flag :=true;
+                    isMetodoB:=true;
+                    isProcesoB:=false;
                     contMetodo:=contMetodo+1;
                end  
           else if(cadena = 'PROCESO') then
                begin
                {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
                palabraAux :='PROCEDURE';
-               procedimientoN := true;
+               isProceso := true;
+               isProcesoB:=true;
+               isMetodoB:=false;
                procAux1:=1;
                flag :=true;
                end   
@@ -439,14 +462,14 @@ program PROYECTO1;
                               palabraVariable := palabraAux;
                               palabraAux := '';
                          end;
-                    if (procedimientoN) then
+                    if (isProceso) then
                     {si es el nombre del procedimiento le agremos un ";"}
                     begin
                          if (palabraAux = 'BEGIN') then
                          {si es el nombre del procedimiento le agremos un ";"}
                          begin
                               palabraAux := ';' + palabraAux ;
-                              procedimientoN := false;
+                              isProceso := false;
                          end;
                     end;
                     traducir:=palabraAux;
@@ -468,6 +491,7 @@ program PROYECTO1;
                     if (isVariable = 3) then
                          begin
                               cadena := cadena + ':' + palabraVariable + ';';
+                              isDeclaraB:=true;
                          end;
                     if (isVariable = 4) then
                          begin
@@ -480,7 +504,7 @@ program PROYECTO1;
                          begin
                          end;     
                     
-                    {if((contDeclaracion=0) and (contMetodo=0) and not(procedimientoN)) then 
+                    {if((contDeclaracion=0) and (contMetodo=0) and not(isProceso)) then 
                          begin 
                               writeLn('ERROR EN SINTAXIS');
                          end;}
@@ -623,11 +647,11 @@ program PROYECTO1;
                     append( errorT );
                    {writeLn( errorT, 'Estructuras de metodo o procedimiento no fueron cerradas');}     
                     close( errorT );
-               end
-          else
+               end;
+          {else
                begin
-                    writeLn('Ejecutado con exito'); 
-               end;     
+                    writeLn('Ejecutado con exito');
+               end;     }
           repeat until keypressed;
      End;
 
@@ -669,12 +693,13 @@ begin
      isVariable := 0;
      isVariableB := false;
      isInicio :=false;
-     procedimientoN := false;
      metodo:='';
      palabraVariable:='';
      metodoDevolver:='';
      contArhivo:=0;
      condicionalB := false;
+     isDeclaraB:=false;
+     isMetodoB:=false;
      menu;
      clrscr;
      INICIALIZAR(L_PALABRA);
