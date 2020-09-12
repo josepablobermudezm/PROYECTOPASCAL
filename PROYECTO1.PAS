@@ -4,7 +4,7 @@ program PROYECTO1;
      VAR L_PALABRA :TIPO_LISTA;
      L_Cab :TIPO_LISTA;
      PALABRA :STRING[100];
-     caso, comentario, isMetodo, isVariableB,procedimientoN  :boolean;
+     caso, comentario, isMetodo, isVariableB,procedimientoN,isInicio  :boolean;
      metodo,metodoDevolver,nombreaux,palabraVariable :string;
      nombrePrograma,beginCount,casoLLaves,isVariable,contMetodo, contDeclaracion, contArhivo: integer;
      reservada, metAux1, procAux1, agreAux1 , progAux1 : integer;
@@ -18,7 +18,9 @@ program PROYECTO1;
           errorT:text;
 
      begin
-          if((metAux1=2) and (cadena<>'') and (cadena<>' ') and ((cadena[1]='M') or (cadena[1]='P') ) ) then
+          if((metAux1=2) and (cadena<>'') and (cadena<>' ') 
+          and (Ord(cadena[1]) > 32)
+          ) then
                begin
                     metAux1:=0;
                     if((cadena<>'METODO') and (cadena<>'PROCESO') and (cadena<>'PROGRAMA'))  then
@@ -29,7 +31,8 @@ program PROYECTO1;
                               close( errorT ); 
                          end;
                end;
-          if((procAux1=2) and (cadena<>'') and (cadena<>' ')  and (  (cadena[1]='M') or (cadena[1]='P') ) ) then
+          if((procAux1=2) and (cadena<>'') and (cadena<>' ')  
+          and (Ord(cadena[1]) > 32)) then
                begin
                     procAux1:=0;
                     if((cadena<>'METODO') and (cadena<>'PROCESO') and (cadena<>'PROGRAMA'))  then
@@ -40,7 +43,7 @@ program PROYECTO1;
                               close( errorT ); 
                          end;
                     
-               end;     
+               end;  
           if(cadena = 'CPB') then
                begin
                palabraAux :='program';
@@ -204,14 +207,16 @@ program PROYECTO1;
                begin
                if (beginCount = 0) then
                     palabraAux := ''
-               else 
+               else
                     palabraAux :='BEGIN';
+                    isInicio := true;
                flag :=true;
                beginCount := beginCount + 1;
                end
           else if (cadena = '}') then
                begin
                     palabraAux :='END';
+                    isInicio := false;
                     flag :=true;
                end  
           else if (cadena = '};') then
@@ -238,12 +243,14 @@ program PROYECTO1;
                begin
                     metAux1:= 2;
                     palabraAux :='END;';
+                    isInicio := false;
                     flag :=true;
                end
           else if (cadena = '}.PROCESO') then
                begin
                procAux1:= 2;
                palabraAux :='END;';
+               isInicio := false;
                flag :=true;
                end
           else if (cadena = 'PROGRAMA') then
@@ -554,7 +561,7 @@ program PROYECTO1;
                begin 
                     assign( errorT, 'ERRORS.TXT' );  
                     append( errorT );
-                    writeLn( errorT, 'Estructuras de metodo o procedimiento no fueron cerradas');      
+                   {writeLn( errorT, 'Estructuras de metodo o procedimiento no fueron cerradas');}     
                     close( errorT );
                end
           else
