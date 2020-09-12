@@ -11,13 +11,21 @@ CPB Calculadora {
             PARA y = 1 HASTA 5 FINAL 
             { 
                 SI (x == y) { 
-                    SISTEMA.MOSTRAR (x,' ',y,' ', ' - '); 
+                    SI (X > 3) { 
+                        SISTEMA.MOSTRAR (x,' ',y,' ', ' - '); 
+                    }.SI 
                 } 
                 SINO { 
                     SISTEMA.MOSTRAR (' '); 
                 } 
             }.PARA 
+            SI ((x == 1) OO (x == 2)) { 
+                SISTEMA.MOSTRAR ('Iteracion numero: ', x); 
+            }.SI 
         }.PARA 
+
+        
+
         SISTEMA.ESPERAR(); 
     }; 
  } 

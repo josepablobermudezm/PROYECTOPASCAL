@@ -4,7 +4,7 @@ program PROYECTO1;
      VAR L_PALABRA :TIPO_LISTA;
      L_Cab :TIPO_LISTA;
      PALABRA :STRING[100];
-     caso, comentario, isMetodo, isVariableB,procedimientoN,condicionalB  :boolean;
+     caso, comentario, isMetodo, isVariableB,procedimientoN,condicionalB,isProceso  :boolean;
      metodo,metodoDevolver,nombreaux,palabraVariable :string;
      nombrePrograma,beginCount,casoLLaves,isVariable,contMetodo, contDeclaracion, contArhivo: integer;
      reservada, metAux1, procAux1, agreAux1 , progAux1 : integer;
@@ -294,13 +294,13 @@ program PROYECTO1;
                     caso := false;
                     flag :=true;     
                end 
-          else if ((cadena = ')') and (caso) and NOT (isMetodo)) then
+          else if ((cadena = ')') and (caso) and NOT (isMetodo) and NOT (procedimientoN)) then
                begin
                     palabraAux :=' of';
                     caso := true;
                     flag :=true;
                end 
-          else if ((cadena = ')') and ( not caso) and NOT (isMetodo)) then
+          else if ((cadena = ')') and ( not caso) and NOT (isMetodo) and NOT (procedimientoN)) then
                begin
                     palabraAux :=')';
                     caso := true;
@@ -359,6 +359,12 @@ program PROYECTO1;
                palabraAux :='END;';
                flag :=true;
                end 
+           else if(cadena = '}.MIENTRAS') then
+               begin
+               {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
+               palabraAux :='END;';
+               flag :=true;
+               end 
           else if(cadena = 'SI') then
                begin
                {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
@@ -383,6 +389,12 @@ program PROYECTO1;
                begin
                {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
                palabraAux :='AND';
+               flag :=true;
+               end 
+          else if(cadena = 'MIENTRAS') then
+               begin
+               {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
+               palabraAux :='WHILE';
                flag :=true;
                end 
           else if(cadena = 'DEVOLVER') then
@@ -636,6 +648,7 @@ begin
      casoLLaves := 0;
      beginCount := 0;
      nombrePrograma := 0;
+     isProceso := false;
      isVariable := 0;
      isVariableB := false;
      procedimientoN := false;

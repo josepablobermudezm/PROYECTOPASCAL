@@ -1,22 +1,17 @@
 CPB Calculadora { 
     AGREGAR.SISTEMA; 
 
-    DECLARACION entero num1,num2,resultado,variable,restaR,multiplicarR ; 
-    METODO entero Sumar (n1,n2: entero )  
-        DECLARACION entero resultado ; 
-    { 
-        resultado = n1+n2;
-        DEVOLVER resultado;
-    }.METODO 
-
-    PROCESO RESTA (N1,N2: Integer) 
+    DECLARACION entero num1,num2,resultado,variable,restaR ; 
+    DECLARACION flotante dividirR ; 
+ 
+    PROCESO resta (N1,N2: entero ) 
     { 
         restaR :=  N1-N2;
     }.PROCESO  
 
-    PROCESO MULTIPLICAR (N1,N2: Integer) 
+    PROCESO dividir (N1,N2: flotante ) 
     { 
-        multiplicarR :=  N1*N2;
+        dividirR :=  N1/N2; 
     }.PROCESO 
 
     PROCESO menu 
@@ -26,26 +21,28 @@ CPB Calculadora {
             SISTEMA.MOSTRAR ('Digite los numeros a calcular: ');
             SISTEMA.OBTENER (num1);
             SISTEMA.OBTENER (num2);
-            SISTEMA.MOSTRAR ('1) Sumar');
-            SISTEMA.MOSTRAR ('2) Restar');
-            SISTEMA.MOSTRAR ('3) Multiplicar');
-            SISTEMA.MOSTRAR ('4) Salir');
-            SISTEMA.OBTENER (VARIABLE);
+            SISTEMA.MOSTRAR ('1) Restar');
+            SISTEMA.MOSTRAR ('2) dividir');
+            SISTEMA.MOSTRAR ('3) Salir');
+            SISTEMA.OBTENER (VARIABLE); 
             CASO ( variable ) { 
                 1: { 
-                    SISTEMA.MOSTRAR ('El resultado de la suma es: ', SISTEMA.LLAMAR. Sumar (num1,num2));
+                    RESTA(NUM1,NUM2); 
+                    SISTEMA.MOSTRAR ('El resultado de la resta es: ', restaR); 
                 } 
                 2: { 
-                    RESTA(NUM1,NUM2);
-                    SISTEMA.MOSTRAR ('El resultado de la resta es: ', restaR);
-                } 
-                3: { 
-                    MULTIPLICAR(NUM1,NUM2);
-                    SISTEMA.MOSTRAR ('El resultado de la multiplicacion es: ', multiplicarR);
+                    MIENTRAS NUM2 == 0 FINAL 
+                    { 
+                        SISTEMA.MOSTRAR ('El dividor No debe ser 0. Dimelo otra vez: '); 
+                        SISTEMA.OBTENER (num2); 
+                    }.MIENTRAS 
+
+                    dividir(NUM1,NUM2);
+                    SISTEMA.MOSTRAR ('El resultado de la multiplicacion es: ', dividirR);
                 } 
             } 
         SISTEMA.ESPERAR(); 
-        }HASTA (variable == 4);
+        }HASTA (variable == 3);
     }.PROCESO 
 
     PROGRAMA { 
