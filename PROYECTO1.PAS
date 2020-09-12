@@ -7,6 +7,7 @@ program PROYECTO1;
      caso, comentario, isMetodo, isVariableB,isProceso,condicionalB,isInicio, isDeclaraB, isProcesoB, isMetodoB :boolean;
      metodo,metodoDevolver,nombreaux,palabraVariable :string;
      nombrePrograma,beginCount,casoLLaves,isVariable,contMetodo, contDeclaracion, contArhivo: integer;
+     programaB : boolean;
      reservada, metAux1, procAux1, agreAux1 , progAux1 : integer;
      VAR ListaLenguaje :TIPO_LISTA;
          ListaAux :TIPO_LISTA;
@@ -19,23 +20,31 @@ program PROYECTO1;
 
      begin
 
-          if((isDeclaraB) and not(isMetodoB) and not(isProcesoB) and (cadena<>'') and (cadena<>' ') 
+          if((isDeclaraB) and not(isMetodoB) and not(programaB) and not(isProcesoB) and (cadena<>'') and (cadena<>' ') 
           and (Ord(cadena[1]) > 32) and(cadena<>';') ) then
+          begin
+               if((cadena='}') and (not(caso) or not(condicionalB))) then
                begin
-                    if((cadena<>'METODO') and (cadena<>'PROCESO') and (cadena<>'PROGRAMA') and (cadena<>'DECLARACION'))  then
-                         begin 
-                              assign( errorT, 'ERRORS.TXT' );  
-                              append( errorT );
-                              writeLn( errorT, 'La palabra reservada: ', cadena,' no existe');      
-                              close( errorT ); 
-                              isDeclaraB:=false;
-                              {isProcesoB:=false;
-                              isMetodoB:=false;}
-                              writeln('Errores encontrados en la palabra reservada ', cadena);
-                              repeat until keypressed;
-                              HALT;
-                         end;
+                    write('');
+               end
+               else
+               begin
+                    if((cadena<>'METODO') and (cadena<>'PROCESO') and (cadena<>'PROGRAMA') and (cadena<>'DECLARACION') 
+                         and (isVariable = 0)  )  then
+                              begin 
+                                   assign( errorT, 'ERRORS.TXT' );  
+                                   append( errorT );
+                                   writeLn( errorT, 'La palabra reservada: ', cadena,' no existe');      
+                                   close( errorT ); 
+                                   isDeclaraB:=false;
+                                   {isProcesoB:=false;
+                                   isMetodoB:=false;}
+                                   writeln('Errores encontrados en la palabra reservada ', cadena);
+                                   repeat until keypressed;
+                                   HALT;
+                    end;
                end;
+          end;   
           if((metAux1=2) and (cadena<>'') and (cadena<>' ') 
           and (Ord(cadena[1]) > 32)) then
                begin
@@ -256,6 +265,7 @@ program PROYECTO1;
           else if (cadena = '};') then
                begin
                     palabraAux :='END.';
+                    programaB := false;
                     flag :=true;
                end  
           else if (cadena = '==') then
@@ -298,6 +308,7 @@ program PROYECTO1;
                end
           else if (cadena = 'PROGRAMA') then
                begin
+                    programaB := true;
                     palabraAux :='';
                     flag :=true;
                end  
@@ -630,7 +641,7 @@ program PROYECTO1;
                                         append( errorT );            
                                         writeLn( errorT, 'Error de sintaxis en linea 1:  ', palabra);      
                                         close( errorT );                
-                                   end;     
+                                   end;  
                               parametro := traducir(palabra);
                               AGREGAR(ListaAux, palabra);
                               AGREGAR(ListaAux, espacio);
@@ -697,6 +708,7 @@ begin
      isVariable := 0;
      isVariableB := false;
      isInicio :=false;
+     programaB := false;
      metodo:='';
      palabraVariable:='';
      metodoDevolver:='';
