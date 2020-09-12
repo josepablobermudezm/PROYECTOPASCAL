@@ -10,7 +10,12 @@ CPB Calculadora {
         { 
             PARA y = 1 HASTA 5 FINAL 
             { 
-                SISTEMA.MOSTRAR (x,' ',y,' ', ' - '); 
+                SI (x == y) { 
+                    SISTEMA.MOSTRAR (x,' ',y,' ', ' - '); 
+                } 
+                SINO { 
+                    SISTEMA.MOSTRAR (' '); 
+                } 
             }.PARA 
         }.PARA 
         SISTEMA.ESPERAR(); 
