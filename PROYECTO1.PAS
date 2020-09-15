@@ -89,12 +89,10 @@ program PROYECTO1;
              
           else if(isMetodo) then 
                begin
-                    
                     if (cadena = ')') then
                          begin
                               (*Se llama a traducir para obtener el tipo de metodo que necesita la funcion*)
                               isMetodo:=false;{terminamos el metodo}
-                              
                               palabraAux :='):'+traducir(metodo)+';';
                               flag :=true;
                               metodo:='';
@@ -294,7 +292,6 @@ program PROYECTO1;
                     palabraAux :='END;';
                     isInicio := false;
                     isMetodoB:=false;
-                    writeln('Terminando metodo');
                     flag :=true;
                end
           else if (cadena = '}.PROCESO') then
@@ -303,7 +300,6 @@ program PROYECTO1;
                palabraAux :='END;';
                isInicio := false;
                flag :=true;
-               writeln('terminando proceso');
                isProcesoB:=false;
                end
           else if (cadena = 'PROGRAMA') then
@@ -374,7 +370,6 @@ program PROYECTO1;
                     metAux1:= 1;
                     palabraAux :='function';
                     flag :=true;
-                    writeln('empezando metodo');
                     isMetodoB:=true;
                     contMetodo:=contMetodo+1;
                end  
@@ -383,7 +378,6 @@ program PROYECTO1;
                {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
                palabraAux :='PROCEDURE';
                isProceso := true;
-               writeln('empezando proceso');
                isProcesoB:=true;
                isMetodoB:=false;
                procAux1:=1;
@@ -496,6 +490,7 @@ program PROYECTO1;
                               if(cadena[1] <> '(') then
                                    begin
                                         metodoDevolver := cadena;{nombre del método}
+                                        writeln(metodoDevolver, ' metodo devolver ');
                                    end 
                          end;
                     if(isVariableB) then
@@ -524,7 +519,6 @@ program PROYECTO1;
                               writeLn('ERROR EN SINTAXIS');
                          end;}
                     traducir:=cadena;
-                    metodoDevolver := '';    
                end;
      end;
 
