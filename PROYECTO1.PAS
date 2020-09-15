@@ -7,7 +7,7 @@ program PROYECTO1;
      caso, comentario, isMetodo, isVariableB,isProceso,condicionalB,isInicio, isDeclaraB, isProcesoB, isMetodoB :boolean;
      metodo,metodoDevolver,nombreaux,palabraVariable :string;
      nombrePrograma,beginCount,casoLLaves,isVariable,contMetodo, contDeclaracion, contArhivo: integer;
-     programaB : boolean;
+     programaB, primerBegin : boolean;
      reservada, metAux1, procAux1, agreAux1 , progAux1 : integer;
      VAR ListaLenguaje :TIPO_LISTA;
          ListaAux :TIPO_LISTA;
@@ -55,7 +55,7 @@ program PROYECTO1;
                               append( errorT );
                               writeLn( errorT, 'La palabra reservada: ', cadena,' no existe');      
                               close( errorT ); 
-                              
+                              HALT;
                          end;
                end;
           if((procAux1=2) and (cadena<>'') and (cadena<>' ')  
@@ -68,6 +68,7 @@ program PROYECTO1;
                               append( errorT );
                               writeLn( errorT, 'La palabra reservada: ', cadena,' no existe');      
                               close( errorT ); 
+                              HALT;
                          end;
                     
                end;
@@ -80,6 +81,7 @@ program PROYECTO1;
                     writeLn( errorT, 'La palabra reservada: ', cadena,
                     ', se encuentra en un lugar incorrecto');      
                     close( errorT ); 
+                    HALT;
                end;  
           if(cadena = 'CPB') then
                begin
@@ -634,7 +636,8 @@ program PROYECTO1;
                                         assign( errorT, 'ERRORS.TXT' );  
                                         append( errorT );            
                                         writeLn( errorT, 'Error de sintaxis en linea 1:  ', palabra);      
-                                        close( errorT );                
+                                        close( errorT ); 
+                                        HALT;               
                                    end;  
                               parametro := traducir(palabra);
                               AGREGAR(ListaAux, palabra);
