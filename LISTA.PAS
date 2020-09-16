@@ -16,13 +16,15 @@ Type
 END;
 
 var valido :boolean;
-
+{------------------------------------------------------------------}
+{Declaracion de procedimientos }
 Procedure Inicializar (Var L :TIPO_LISTA);
 Procedure AGREGAR(VAR L :TIPO_LISTA; ELE :STRING);
 Procedure MostrarLista(Var L :TIPO_LISTA);
 Procedure Validarllaves(VAR L :TIPO_LISTA);
 procedure EliminarUltimaLLave(VAR L :TIPO_LISTA; Var tipoP :string);
 Procedure VerificarFinal(VAR L :TIPO_LISTA);
+{------------------------------------------------------------------}
 
 IMPLEMENTATION
 Procedure Inicializar (Var L :TIPO_LISTA);
@@ -60,6 +62,7 @@ Procedure AGREGAR (VAR L :TIPO_LISTA; ELE :STRING);
     END;
 {Procedimiento que se encarga de validar que la cantidad de llaves sea correcta
 en el lenguaje escrito por el usuario para su posterior traducción a código intermedio
+de tipo pascal
 }
 procedure Validarllaves(VAR L :TIPO_LISTA);
     var auxiliar : TIPO_LISTA;
@@ -96,65 +99,11 @@ procedure Validarllaves(VAR L :TIPO_LISTA);
                         end;
             auxiliar := auxiliar^.SGTE;
             END;
-        if(((llaveA <> 0) AND (llaveC <> 0)) AND (llaveA = llaveC)) then
+        if(((llaveA <> 0) AND (llaveC <> 0)) AND (llaveA = llaveC)) then 
             begin
                 valido := true;
             end;
     End;
-
-procedure VerificarFinal(VAR L :TIPO_LISTA);
-    var auxiliar, aux2 : TIPO_LISTA;
-    cont, cont2: integer;
-    errorT : text; 
-    fichero,fichero2: text;       (* Un fichero de texto *) 
-    linea,linea2: string;      (* La linea que leeremos *)
-        Begin
-            {auxiliar := L;
-            while auxiliar <> nil do 
-                BEGIN
-                    cont2:= cont2+1;
-                    if( (auxiliar^.PALABRA <> ';') and (auxiliar^.SGTE=nil) ) then
-                        begin
-                            assign( errorT, 'ERRORS.TXT' );  
-                            append( errorT );
-                            writeLn( errorT, 'Error de sintaxis en linea final:  ;');      
-                            close( errorT );  
-                            writeLn(auxiliar^.PALABRA, ' palabra');      
-                        end;
-                        
-                    auxiliar := auxiliar^.SGTE;
-                END;}
-
-
-                {assign( fichero, 'prueba.cpb' );  (* Le asignamos nombre *) 
-                reset( fichero );                (* Lo abrimos para leer datos *) 
-                while not eof( fichero) do
-                begin
-                    cont := cont + 1;
-                    readLn( fichero, linea );    (* Leemos una linea *)
-                end;
-                close( fichero );                (* Finalmente cerramos *) 
-
-
-
-
-                assign( fichero2, 'prueba.cpb' );  (* Le asignamos nombre *) 
-                reset( fichero2 );                (* Lo abrimos para leer datos *) 
-                while not eof( fichero2) do
-                begin
-                    cont2 := cont2 + 1;
-                    if(cont2 = cont-1 ) then
-                    begin
-                        readLn( fichero2, linea2 );    (* Leemos una linea *)
-                        if(linea2 = '    ; ') then
-                        begin
-                            writeln(linea2, 'esta es mi linea');
-                        end;
-                    end;
-                   
-                end;
-                close( fichero2 );  }
-        End;
 
 procedure MostrarLista(VAR L :TIPO_LISTA);
     var auxiliar : TIPO_LISTA;
@@ -167,6 +116,9 @@ procedure MostrarLista(VAR L :TIPO_LISTA);
         END;
     End;
 
+{Procedimiento imporatante para eliminar la última llave de la lista 
+esto debido a que si no se hacía ibamos a tener un end de más en el código 
+en pascal,por lo cual nos daría errores}
 procedure EliminarUltimaLLave(VAR L :TIPO_LISTA; Var tipoP :string);
     Var cont, cont2 :integer;
         auxiliar : TIPO_LISTA;
@@ -196,8 +148,6 @@ procedure EliminarUltimaLLave(VAR L :TIPO_LISTA; Var tipoP :string);
                 if(cont2 = cont) then
                 begin
                     auxiliar2^.PALABRA := '';
-                    {auxiliar2^.PALABRA := '';
-                    auxiliar2^.PALABRA := '';}
                 end;
             end;
             auxiliar2 := auxiliar2^.SGTE;
