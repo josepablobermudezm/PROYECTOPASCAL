@@ -1,17 +1,28 @@
+{Archivo principal del proyecto utilizado para 
+la carga, compilación del archivo del lenguaje,
+así como para validación de sintaxis}
 program PROYECTO1;
+     {Incluimos la unidad básica de pascal,
+     así como la unidad lista que hemps creado, 
+     para poder tener esta estructura dinámica muy importante en el manejo,
+     del archivo}
      Uses crt,Lista;
-     
+     {Bloque de declaración de variables globales, muy importantes para 
+     el buen funcionamiento del código fuente}
      VAR L_PALABRA :TIPO_LISTA;
      L_Cab :TIPO_LISTA;
      PALABRA :STRING[100];
      caso, comentario, isMetodo, isVariableB,isProceso,condicionalB,isInicio, isDeclaraB, isProcesoB, isMetodoB :boolean;
      metodo,metodoDevolver,nombreaux,palabraVariable :string;
      nombrePrograma,beginCount,casoLLaves,isVariable,contMetodo, contDeclaracion, contArhivo: integer;
-     programaB, primerBegin : boolean;
+     programaB : boolean;
      reservada, metAux1, procAux1, agreAux1 , progAux1 : integer;
      VAR ListaLenguaje :TIPO_LISTA;
          ListaAux :TIPO_LISTA;
-
+     {---------------------------------------------------------------------}
+     {Método traducir, utlizado para convertir las palabras
+     escritas en el lenguaje definido por los estudiantes
+     a lenguaje pascal}
      function traducir(cadena :string) : string;
           var palabraAux :string;
           flag :boolean; 
@@ -19,7 +30,8 @@ program PROYECTO1;
           errorT:text;
 
      begin
-
+          {Este tipo de condicional nos sirve para determinar que ciertas palabras reservadas,
+          se encuentren escritas correctamente}
           if((isDeclaraB) and not(isMetodoB) and not(programaB) and not(isProcesoB) and (cadena<>'') and (cadena<>' ') 
           and (Ord(cadena[1]) > 32) and(cadena<>';') ) then
           begin
@@ -31,6 +43,8 @@ program PROYECTO1;
                begin
                     if((cadena<>'METODO') and (cadena<>'PROCESO') and (cadena<>'PROGRAMA') and (cadena<>'DECLARACION') 
                          and (isVariable = 0)  )  then
+                              {Si no se cumple entonces vamos a agregar el error
+                              respectivo en un archivo de texto destinado para esto}
                               begin 
                                    assign( errorT, 'ERRORS.TXT' );  
                                    append( errorT );
@@ -55,7 +69,7 @@ program PROYECTO1;
                               append( errorT );
                               writeLn( errorT, 'La palabra reservada: ', cadena,' no existe');      
                               close( errorT ); 
-                              HALT;
+                              
                          end;
                end;
           if((procAux1=2) and (cadena<>'') and (cadena<>' ')  
@@ -68,11 +82,13 @@ program PROYECTO1;
                               append( errorT );
                               writeLn( errorT, 'La palabra reservada: ', cadena,' no existe');      
                               close( errorT ); 
-                              HALT;
                          end;
                     
                end;
-           {una declaración de variables no puede estar dentro de un begin}
+           {Este condicional nos ayuda a determinar si 
+           una declaración de variables se encuentran en un lugar correcto,
+           ya que, sabemos que en pascal no se puede declarar variables dentro de un 
+           begin}
           if ((isInicio) and (cadena = 'DECLARACION')) then
                begin
                     isInicio :=false;
@@ -81,7 +97,6 @@ program PROYECTO1;
                     writeLn( errorT, 'La palabra reservada: ', cadena,
                     ', se encuentra en un lugar incorrecto');      
                     close( errorT ); 
-                    HALT;
                end;  
           if(cadena = 'CPB') then
                begin
@@ -140,7 +155,8 @@ program PROYECTO1;
                               flag:=false; 
                          end
                                   
-               end                      
+               end          
+          {Inicio de la mayoría de condicionales para traducir palabras reservadas}            
           else if ((cadena = 'ENTERO')) then
                begin
                palabraAux :='Integer';
@@ -369,20 +385,20 @@ program PROYECTO1;
                begin
                     {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
                     isMetodo := true;
-                    metAux1:= 1; {par saber que estamos en un método}
-                    palabraAux :='function'; 
+                    metAux1:= 1;
+                    palabraAux :='function';
                     flag :=true;
                     isMetodoB:=true;
-                    contMetodo:=contMetodo+1; {lo  usamos para saber en que parte del método estamos }
+                    contMetodo:=contMetodo+1;
                end  
           else if(cadena = 'PROCESO') then
                begin
                {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
                palabraAux :='PROCEDURE';
-               isProceso := true; {sabemos que estamos en un proceso}
-               isProcesoB:=true; {sabemos que estamos en un proceso pero en un auxiliar}
-               isMetodoB:=false; {sabemos que NO estamos en un método}
-               procAux1:=1; {para saber que entramos a la primera parte del proceso}
+               isProceso := true;
+               isProcesoB:=true;
+               isMetodoB:=false;
+               procAux1:=1;
                flag :=true;
                end   
           else if(cadena = 'PARA') then
@@ -419,14 +435,14 @@ program PROYECTO1;
                begin
                {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
                palabraAux :='IF';
-               condicionalB := true; {para saber que estamos dentro de un IF}
+               condicionalB := true;
                flag :=true;
                end 
            else if(cadena = 'SINO') then
                begin
                {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
                palabraAux :='ELSE';
-               condicionalB := false; {para sabe que terminamos un IF y entramos a un ELSE}
+               condicionalB := false;
                flag :=true;
                end 
           else if(cadena = 'OO') then
@@ -456,7 +472,6 @@ program PROYECTO1;
                flag :=false;          
           if flag then
                begin
-                    {sabemos en que parte del programa vamos leyendo}
                     nombrePrograma := nombrePrograma + 1;
                     {de esta forma sabemos cuando estamos en la iteración del nombre del programa y agregar un ";" }
                     if(isVariableB) then
@@ -466,13 +481,11 @@ program PROYECTO1;
                          {de esta forma sabemos en que segmento de los 3 en una declaración se encuentra la iteración}
                     if (nombrePrograma = 2) then
                          begin
-                              {le concatenamos un ; ya que no lo posee el lenguaje cpb}
                               palabraAux := palabraAux + ';';
                               isInicio :=false;
                          end;
                     if (isVariable = 2) then
                          begin
-                              {no queremos escribir esta parte para que compile correctamente en pascal}
                               palabraVariable := palabraAux;
                               palabraAux := '';
                          end;
@@ -486,15 +499,16 @@ program PROYECTO1;
                               isProceso := false;
                          end;
                     end;
-                    traducir:=palabraAux;{retornamos la variable con el valor del método}
+                    traducir:=palabraAux;
                end
           else
                begin                 
                     if (isMetodo) then
                          begin
-                              if(cadena[1] <> '(') then{para no tomar los parámetros}
+                              if(cadena[1] <> '(') then
                                    begin
                                         metodoDevolver := cadena;{nombre del método}
+                                        writeln(metodoDevolver, ' metodo devolver ');
                                    end 
                          end;
                     if(isVariableB) then
@@ -504,13 +518,12 @@ program PROYECTO1;
                          {de esta forma sabemos en que segmento de los 3 en una declaración se encuentra la iteración}
                     if (isVariable = 3) then
                          begin
-                              {le agregamos cierta sintaxis para que funcione en pascal}
                               cadena := cadena + ':' + palabraVariable + ';';
-                              isDeclaraB:=true;{para saber que ya no estamos en la declaración}
+                              isDeclaraB:=true;
                          end;
                     if (isVariable = 4) then
                          begin
-                              isVariable := 0;{reiniciamos para poder trabajar con la siguiente declarcación}
+                              isVariable := 0;
                               isVariableB := false;
                               palabraVariable:='';
                               cadena := '';
@@ -639,8 +652,7 @@ program PROYECTO1;
                                         assign( errorT, 'ERRORS.TXT' );  
                                         append( errorT );            
                                         writeLn( errorT, 'Error de sintaxis en linea 1:  ', palabra);      
-                                        close( errorT ); 
-                                        HALT;               
+                                        close( errorT );                
                                    end;  
                               parametro := traducir(palabra);
                               AGREGAR(ListaAux, palabra);
