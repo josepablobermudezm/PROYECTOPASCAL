@@ -369,20 +369,20 @@ program PROYECTO1;
                begin
                     {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
                     isMetodo := true;
-                    metAux1:= 1;
-                    palabraAux :='function';
+                    metAux1:= 1; {par saber que estamos en un método}
+                    palabraAux :='function'; 
                     flag :=true;
                     isMetodoB:=true;
-                    contMetodo:=contMetodo+1;
+                    contMetodo:=contMetodo+1; {lo  usamos para saber en que parte del método estamos }
                end  
           else if(cadena = 'PROCESO') then
                begin
                {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
                palabraAux :='PROCEDURE';
-               isProceso := true;
-               isProcesoB:=true;
-               isMetodoB:=false;
-               procAux1:=1;
+               isProceso := true; {sabemos que estamos en un proceso}
+               isProcesoB:=true; {sabemos que estamos en un proceso pero en un auxiliar}
+               isMetodoB:=false; {sabemos que NO estamos en un método}
+               procAux1:=1; {para saber que entramos a la primera parte del proceso}
                flag :=true;
                end   
           else if(cadena = 'PARA') then
@@ -419,14 +419,14 @@ program PROYECTO1;
                begin
                {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
                palabraAux :='IF';
-               condicionalB := true;
+               condicionalB := true; {para saber que estamos dentro de un IF}
                flag :=true;
                end 
            else if(cadena = 'SINO') then
                begin
                {Pone la bandera de tipo metodo true, para determinar que existe un metodo}
                palabraAux :='ELSE';
-               condicionalB := false;
+               condicionalB := false; {para sabe que terminamos un IF y entramos a un ELSE}
                flag :=true;
                end 
           else if(cadena = 'OO') then
@@ -456,6 +456,7 @@ program PROYECTO1;
                flag :=false;          
           if flag then
                begin
+                    {sabemos en que parte del programa vamos leyendo}
                     nombrePrograma := nombrePrograma + 1;
                     {de esta forma sabemos cuando estamos en la iteración del nombre del programa y agregar un ";" }
                     if(isVariableB) then
@@ -465,11 +466,13 @@ program PROYECTO1;
                          {de esta forma sabemos en que segmento de los 3 en una declaración se encuentra la iteración}
                     if (nombrePrograma = 2) then
                          begin
+                              {le concatenamos un ; ya que no lo posee el lenguaje cpb}
                               palabraAux := palabraAux + ';';
                               isInicio :=false;
                          end;
                     if (isVariable = 2) then
                          begin
+                              {no queremos escribir esta parte para que compile correctamente en pascal}
                               palabraVariable := palabraAux;
                               palabraAux := '';
                          end;
@@ -483,16 +486,15 @@ program PROYECTO1;
                               isProceso := false;
                          end;
                     end;
-                    traducir:=palabraAux;
+                    traducir:=palabraAux;{retornamos la variable con el valor del método}
                end
           else
                begin                 
                     if (isMetodo) then
                          begin
-                              if(cadena[1] <> '(') then
+                              if(cadena[1] <> '(') then{para no tomar los parámetros}
                                    begin
                                         metodoDevolver := cadena;{nombre del método}
-                                        writeln(metodoDevolver, ' metodo devolver ');
                                    end 
                          end;
                     if(isVariableB) then
@@ -502,12 +504,13 @@ program PROYECTO1;
                          {de esta forma sabemos en que segmento de los 3 en una declaración se encuentra la iteración}
                     if (isVariable = 3) then
                          begin
+                              {le agregamos cierta sintaxis para que funcione en pascal}
                               cadena := cadena + ':' + palabraVariable + ';';
-                              isDeclaraB:=true;
+                              isDeclaraB:=true;{para saber que ya no estamos en la declaración}
                          end;
                     if (isVariable = 4) then
                          begin
-                              isVariable := 0;
+                              isVariable := 0;{reiniciamos para poder trabajar con la siguiente declarcación}
                               isVariableB := false;
                               palabraVariable:='';
                               cadena := '';
