@@ -512,18 +512,13 @@ program PROYECTO1;
                          begin
                               isVariable := 0;{reiniciamos para poder trabajar con la siguiente declarcación}
                               isVariableB := false;
-                              palabraVariable:='';
+                              palabraVariable:=''; {no escribirmos esto ya que no es necesario en pascal}
                               cadena := '';
                          end;
                     if(palabraVariable <> '') then
                          begin
                          end;     
-                    
-                    {if((contDeclaracion=0) and (contMetodo=0) and not(isProceso)) then 
-                         begin 
-                              writeLn('ERROR EN SINTAXIS');
-                         end;}
-                    traducir:=cadena;
+                    traducir:=cadena; {retornamos la variable que ocupamos en el método}
                end;
      end;
 
@@ -533,6 +528,7 @@ program PROYECTO1;
      aux :TIPO_LISTA;
 
      Begin
+          {vista de archivo compilando}
           clrscr;
           writeln('                     --------Compilando--------');
           nombreArc := nombreaux+'.pas';
@@ -546,9 +542,9 @@ program PROYECTO1;
                     Assign(Archiv,nombreArc); {Asigna variable "Archiv" a Pueba.txt}
                     ReWrite(Archiv); {Crea el archivo}
                     palabraP := 'END';
-                    EliminarUltimaLLave(ListaLenguaje, palabraP);
+                    EliminarUltimaLLave(ListaLenguaje, palabraP);{elminamos la llave que no es necesaria para pascal}
                     aux := ListaLenguaje;
-                    while aux <> nil do 
+                    while aux <> nil do {recorremos la lista y escribirmos en el archivo }
                     begin
                          write( Archiv, aux^.PALABRA );
                          aux := aux^.SGTE;
@@ -565,14 +561,14 @@ program PROYECTO1;
           
           repeat until keypressed;
      End;
-
+     {función para saber si el archivo existe}
      function FileExists(nombre: String): boolean;
      var
      f: text;
      begin
      assign(f,nombre);
      reset(f);
-     IF IORESULT <> 0 THEN
+     IF IORESULT <> 0 THEN {si no hay errores entonces si exsite el archivo}
      begin
           close(f);
           FileExists:=true;
@@ -591,14 +587,14 @@ program PROYECTO1;
           {Creamos el archivo de errores, y le escribimos un título}
           assign( errorT, 'ERRORS.TXT' );  
           rewrite( errorT );              
-          writeLn( errorT, 'Lista de errores');      
+          writeLn( errorT, 'Lista de errores');    {para darle una cabecera}  
           close( errorT ); 
 
           clrscr;
           writeln('                     --------Cargando Archivo--------');
           write('                     Digite el nombre del archivo: ');
           readln(nombreaux);
-          nombreArchivo := nombreaux + '.cpb';
+          nombreArchivo := nombreaux + '.cpb';{nombre del archivo junto con su extensión}
           assign(f,nombreArchivo);
           reset(f);
           Inicializar (ListaLenguaje);
@@ -619,21 +615,22 @@ program PROYECTO1;
                     
                     if((caracter <> ' ') AND (ord(caracter)<>10)) then
                          begin
-                              palabra := palabra + caracter;
+                              palabra := palabra + caracter;{concatenamos los caracteres para formar palabras}
                          end
                     else if (ord(caracter ) = 10 ) then
                          begin
                               espacio :=' ';
-                              AGREGAR (ListaLenguaje, espacio);
+                              AGREGAR (ListaLenguaje, espacio);{agregamos espacios a la lista}
                          end
                     else
                          begin   
                               contArhivo:=contArhivo+1;     
                               espacio :=' '; 
                               for j := 1 to Length(palabra) do
-                                   palabra[j] := UpCase(palabra[j]);
+                                   palabra[j] := UpCase(palabra[j]);{pasamos a mayúsculas}
 
-                              if((contArhivo=1) and (palabra <> 'CPB') )then
+                              if((contArhivo=1) and (palabra <> 'CPB') )then {encontramos un error}
+                              {no se puede hacer si no encontramos un CPB en el archivo}
                                    begin 
                                         writeln('Hay un error en cpb');
                                         assign( errorT, 'ERRORS.TXT' );  
@@ -647,6 +644,7 @@ program PROYECTO1;
                               AGREGAR(ListaAux, espacio);
                               AGREGAR (ListaLenguaje, parametro);
                               AGREGAR (ListaLenguaje, espacio);
+                              {agregamos la palabras a las listas}
                               palabra :='';
                          end;
                     (*writeLn( Caracter );            (* Y la mostramos en pantalla*) 
@@ -671,6 +669,7 @@ program PROYECTO1;
      End;
 
      procedure menu;
+     {menú principal del sistema}
      Var i:integer;
      Begin
           repeat
@@ -687,8 +686,8 @@ program PROYECTO1;
                1: Cargar;
                2: Compilar;
           End;
-          clrscr;
-          until(i = 3);
+          clrscr;{limpiamos la pantalla}
+          until(i = 3);{condición de salida}
      End;
 
         function termina:boolean;
@@ -699,6 +698,7 @@ program PROYECTO1;
         End;
 
 begin
+     {declaración de variables e inicialización}
      caso := false;
      comentario := false;
      casoLLaves := 0;
@@ -716,8 +716,8 @@ begin
      condicionalB := false;
      isDeclaraB:=false;
      isMetodoB:=false;
-     menu;
-     clrscr;
-     INICIALIZAR(L_PALABRA);
-     repeat until keypressed;
+     menu;{llamamos a menu}
+     clrscr;{limpiamos pantalla}
+     INICIALIZAR(L_PALABRA);{iniciamos la lista}
+     repeat until keypressed;{espera que se presione una tecla}
 end.
